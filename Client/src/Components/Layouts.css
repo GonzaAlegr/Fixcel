@@ -1,0 +1,213 @@
+header {
+  background: linear-gradient(90deg, #1e3a8a, #22c55e);
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  box-shadow: 0 10px 20px rgba(133, 133, 133, 0.781);
+
+}
+.menu {
+  display: flex;
+  gap: 25px;
+}
+
+.menu a {
+  border-radius: 14px;
+  padding: 15px;
+  background-color: #1e3b8a54;
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 500;
+  transition:  0.5s ease;
+}
+
+.menu a:hover {
+  background-color: #ffffff41;
+  color: #ffffff;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px  #1e3b8a7e;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  margin-top: auto;
+}
+
+.prueba{
+    height: 1000px;
+}
+
+.footer {
+  background: linear-gradient(90deg, #1e3a8a, #22c55e);
+  color: #ffffff;
+  text-align: center;
+  padding: 25px 0;
+  font-size: 1rem;
+  font-weight: 500;
+  box-shadow: 10px 0 20px rgba(133, 133, 133, 0.781);
+  position: relative;
+}
+
+.footer-info {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #f3f4f6;
+  margin-bottom: 10px;
+}
+
+.footer-copy {
+  font-size: 0.9rem;
+  color: #d1d5db;
+  margin-top: 15px;
+}
+
+.logofo{
+  width: 100px;
+  border-radius: 14px;
+  padding: 15px;
+  background-color: #1e3b8a54;
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 500;
+  transition:  0.5s ease;
+  font-size: 1.8rem;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.logofo:hover{
+  background-color: #1e3b8a8f;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.747);
+}
+
+.letra {
+  width: 100px;            
+  margin-left: 15px;
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: all 0.7s ease;
+  pointer-events: none;
+  margin-bottom:5px;
+}
+
+.logo-container:hover .letra {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.eng{
+    width: 15%;;
+}
+
+.engf{
+    width: 4%;
+}
+
+.registro-container {
+  background-color: #fff;
+  width: 420px;
+  margin: 80px auto;
+  padding: 0 40px 40px; /* top en 0 para que el título pueda "salir" hacia arriba */
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  overflow: hidden;
+  transition: all 0.3s ;
+}
+
+.registro-container:hover{
+  transform: scale(1.02);
+}
+
+.registro-titulo {
+  display: block;
+  background: linear-gradient(90deg, #1e3a8a, #22c55e);
+  color: #fff;
+  padding: 18px 40px;
+  margin: 0 -40px 20px;     
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+  box-shadow: none;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.registro-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-align: left;
+}
+
+.registro-form label {
+  font-weight: 600;
+  color: #1e3a8a;
+}
+
+/* Inputs */
+.registro-form input[type="text"],
+.registro-form input[type="password"] {
+  padding: 12px;
+  border-radius: 12px;
+  border: 2px solid #1e3a8a60;
+  outline: none;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.registro-form input[type="text"]:focus,
+.registro-form input[type="password"]:focus {
+  border-color: #1e3a8a;
+  box-shadow: 0 0 6px rgba(30, 58, 138, 0.4);
+}
+
+/* Botón */
+.btn-registrar {
+  margin-top: 10px;
+  background: linear-gradient(90deg, #1e3a8a, #22c55e);
+  color: #fff;
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-registrar:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(30, 58, 138, 0.6);
+}
+
+/* Mensaje */
+.mensaje {
+  margin-top: 15px;
+  font-weight: 500;
+  color: #22c55e;
+}
+
+.mensaje {
+  margin-top: 15px;
+  color: #22c55e; /* verde éxito */
+  font-weight: 600;
+  text-align: center;
+}
+
+.mensaje.error {
+  color: #ef4444; /* rojo para error */
+}

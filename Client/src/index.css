@@ -1,0 +1,14 @@
+body {
+  background-color: #ffffff;
+
+  
+  min-height: 100vh;
+  margin: 0;
+  color: #ffffff;
+  font-family: 'Poppins', sans-serif; /* opcional */
+  background-attachment: fixed; /* hace que el fondo no se mueva al hacer scroll */
+}
+
+/*  background: 
+    linear-gradient(rgba(0, 0, 0, 0.301)),
+    linear-gradient(to bottom, #22c55e, #1e3a8a);*/
