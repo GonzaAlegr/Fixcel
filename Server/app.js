@@ -5,7 +5,7 @@ const sqlite3 = require('sqlite3').verbose();
 
 // 2️⃣ Configuración inicial
 const app = express();
-const PORT = 3000; // o el puerto que uses
+const PORT = 4000; // o el puerto que uses
 
 app.use(express.json());
 app.use(cors());

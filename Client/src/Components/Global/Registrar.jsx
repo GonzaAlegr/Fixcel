@@ -15,7 +15,7 @@ function Registrar() {
         setMsg('')
 
        try{
-         const ServidorBack= await axios.post('http://localhost:3000/server/RegistrarUsuario',{
+         const ServidorBack= await axios.post('http://localhost:4000/server/RegistrarUsuario',{
             User,
             Password,
             Name,
