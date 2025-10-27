@@ -2,7 +2,7 @@ const express = require('express');
 
 const Rutas = express.Router();
 
-const { RegistrarReparacion } = require('../Controllers/Reparaciones.controller');
+const { RegistrarReparacion } = require('../Controller/Reparaciones.Controller');
 
 Rutas.post('/reparaciones/registrar', RegistrarReparacion);
 

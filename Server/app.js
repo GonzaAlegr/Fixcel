@@ -4,7 +4,7 @@ const App= Express()
 
 require('dotenv').config()
 
-const PORT= procces.env.PORT ||  5000
+const PORT= process.env.PORT ||  5000
 
 const LoginRouter=require('./src/Router/Login.Router')
 const ProductosRouter = require('./src/Router/Productos.Router');
