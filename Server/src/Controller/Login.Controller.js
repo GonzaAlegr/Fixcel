@@ -1,55 +1,67 @@
-const db= require('../DataBase/db')
-const {PasswordEncriptar,CompararPassword}=require('../Utils/hash')
-
-// generar el metodo de registro
-const LoginRegister=async(req,res)=>{
-    // requ front a back      resolve back a front
-    const{User,Password,Name,DNI}=req.body;
-
-    if(!User || !Password || !Name || !DNI){
-        console.error('campos Vacios❗')
-        return res.status(400).json({Error:'Debe completar todos los Campos'})
-    }
-
-    const query='SELECT * FROM Usuarios WHERE User=? Or DNI=?'
-    db.get(query,[User, DNI],(Error,Tabla)=>{
-        if(Error){
-            console.error('La query es Incorrecta')
-        }
-        if(!Tabla){
-            console.error('Usuario Existente')
-            return res.status(404).json({Error: 'Ya se encuentra Registrado'})
-
-        }
-        if(!Tabla){
-            console.error('DNI Existente')
-            return res.status(404).json({Error: 'Dni ya Registrado'})
-
-        }
-
-    })
+const db = require('../DataBase/db');
+const { PasswordEncriptar } = require('../Utils/hash');
 
 
-    const hash= PasswordEncriptar(Password)
-    const query2='Insert Into Usuarios(User,Password, Name)VALUES(?,?,?)'
+const LoginRegister = async (req, res) => {
+  try {
+    const { User, Password, Name, DNI, Email } = req.body;
+
     
-    if(hash){
-        console.error('La Contraseña no es valida')
-        return res.status(404).json({Error:'Su contraseña no es valida'})
+    if (!User || !Password || !Name || !DNI || !Email) {
+      console.error('❌ Campos vacíos');
+      return res.status(400).json({ Error: 'Debe completar todos los campos.' });
     }
-    db.run(query2,[User,hash,Name,DNI],(Error)=>{
-        if(Error){
-            console.error('No se pudo Registrar')
-            return res.status(500).son({Error:'Error en Server'})
+
+    
+    const queryCheck = 'SELECT * FROM Usuarios WHERE User = ? OR DNI = ? OR Email = ?';
+    db.get(queryCheck, [User, DNI, Email], async (error, existing) => {
+      if (error) {
+        console.error('❌ Error en la consulta:', error.message);
+        return res.status(500).json({ Error: 'Error en la base de datos.' });
+      }
+
+      if (existing) {
+        if (existing.User === User) {
+          console.warn('⚠️ Usuario ya registrado');
+          return res.status(400).json({ Error: 'El usuario ya está registrado.' });
         }
+        if (existing.DNI === DNI) {
+          console.warn('⚠️ DNI ya registrado');
+          return res.status(400).json({ Error: 'El DNI ya está registrado.' });
+        }
+        if (existing.Email === Email) {
+          console.warn('⚠️ Email ya registrado');
+          return res.status(400).json({ Error: 'El correo electrónico ya está registrado.' });
+        }
+      }
+
+      // 🔐 Encriptar contraseña
+      const hash = await PasswordEncriptar(Password);
+      if (!hash) {
+        console.error('❌ Error al encriptar contraseña');
+        return res.status(500).json({ Error: 'No se pudo encriptar la contraseña.' });
+      }
+
+      
+      const insert = `INSERT INTO Usuarios (DNI, User, Password, Name, Email) VALUES (?, ?, ?, ?, ?)`;
+      db.run(insert, [DNI, User, hash, Name, Email], function (err) {
+        if (err) {
+          console.error('❌ Error al registrar usuario:', err.message);
+          return res.status(500).json({ Error: 'Error al registrar usuario.' });
+        }
+
+        console.log(`✅ Usuario ${User} registrado correctamente`);
         res.status(201).json({
-            mensaje: 'Usuario Registrado Correctamente ✅',
-            ID:this.lastID,
-            User
-        })
-    })
+          mensaje: 'Usuario registrado correctamente ✅',
+          ID: this.lastID,
+          User,
+        });
+      });
+    });
+  } catch (error) {
+    console.error('❌ Error general:', error);
+    res.status(500).json({ Error: 'Error en el servidor.' });
+  }
+};
 
-}
-
-
-module.exports={LoginRegister}
+module.exports = { LoginRegister };

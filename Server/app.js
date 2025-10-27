@@ -20,20 +20,34 @@ const db = new sqlite3.Database('./src/Database/db.db', (err) => {
 });
 
 // 4️⃣ Ruta para registrar usuario
-app.post('/server/RegistrarUsuario', (req, res) => {
-  const { User, Password, Name, DNI } = req.body;
-  console.log(req.body);
+const { PasswordEncriptar } = require('./src/Utils/hash');
 
-  const query = `INSERT INTO USUARIOS (User, Password, Name, DNI) VALUES (?, ?, ?, ?)`;
-  db.run(query, [User, Password, Name, DNI], (err) => {
-    if (err) {
-      console.error('❌ Error al insertar usuario:', err.message);
-      return res.status(500).json({ error: 'Error al registrar usuario' });
+app.post('/server/RegistrarUsuario', async (req, res) => {
+  try {
+    const { User, Password, Name, DNI } = req.body;
+    console.log(req.body);
+
+    // Encriptar la contraseña antes de guardar
+    const hash = await PasswordEncriptar(Password);
+    if (!hash) {
+      return res.status(500).json({ error: 'No se pudo encriptar la contraseña' });
     }
-    console.log('✅ Usuario insertado correctamente');
-    res.json({ mensaje: 'Usuario registrado correctamente' });
-  });
+
+    const query = `INSERT INTO USUARIOS (User, Password, Name, DNI) VALUES (?, ?, ?, ?)`;
+    db.run(query, [User, hash, Name, DNI], (err) => {
+      if (err) {
+        console.error('❌ Error al insertar usuario:', err.message);
+        return res.status(500).json({ error: 'Error al registrar usuario' });
+      }
+      console.log('✅ Usuario insertado correctamente');
+      res.json({ mensaje: 'Usuario registrado correctamente' });
+    });
+  } catch (error) {
+    console.error('Error en servidor:', error);
+    res.status(500).json({ error: 'Error del servidor' });
+  }
 });
+
 
 // 5️⃣ Iniciar servidor
 app.listen(PORT, () => {

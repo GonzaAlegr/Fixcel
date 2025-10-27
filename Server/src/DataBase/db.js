@@ -16,12 +16,12 @@ const db= new SQLite.Database(db_Ubicacion, (Error)=>{
         console.log('La BD se creo Correctamente ✅')
         db.run(
             `
-            CREATE TABLE IF NOT EXISTS Usuarios(
-             ID INTEGER PRIMARY KEY AUTOINCREMENT,
-             User TEXT UNIQUE,
-             Password TEXT,
-             Name TEXT,
-             DNI TEXT UNIQUE
+           CREATE TABLE IF NOT EXISTS Usuarios(
+           DNI TEXT PRIMARY KEY,
+           User TEXT UNIQUE,
+           Password TEXT,
+           Name TEXT,
+           Email TEXT UNIQUE
             )`,(Error)=>{
                 if(Error){
                     console.log('No se pudo crear la Tabla USUARIOS ❗')
