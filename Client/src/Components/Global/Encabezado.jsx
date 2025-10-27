@@ -4,7 +4,7 @@ import '../Layouts.css'
 import { AiFillStar } from "react-icons/ai"
 import Letra from './img/fixcel.png'
 import Eng from './img/fixx.png'
-import Registrar from './Registrar.jsx'
+import Registrar from '../Pages/Registrar.jsx'
 
 function Encabezado() {
   return (
@@ -18,11 +18,9 @@ function Encabezado() {
 
         <nav className="menu">
           {/* ✅ Enlaces de navegación */}
-          <Link to="/login">Login</Link>
+          <Link to="/Login">Login</Link>
           <a href="#">Productos</a>
           <a href="#">Servicios</a>
-          <a href="#">Agregar Usuario</a>
-          <a href="#">Eliminar Usuario</a>
         </nav>
       </header>
 

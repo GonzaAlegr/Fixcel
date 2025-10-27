@@ -211,3 +211,15 @@ footer {
 .mensaje.error {
   color: #ef4444; /* rojo para error */
 }
+
+.sweetalert-icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.sweetalert-icon {
+  font-size: 60px;
+  color: #22c55e; /* Verde éxito */
+}
