@@ -1,15 +1,15 @@
-const Encriptar= require('bcrypt')
-const Salto=10
+const bcrypt = require('bcrypt'); // CommonJS, si usas import: import bcrypt from 'bcrypt';
 
-//metodo de encriptar contraseña
-const PasswordEncriptar=async(Password)=>{
-    const Seguridad= Encriptar.genSalt(Salto)
-    return Encriptar.hash(Password,Seguridad)
-}
+const SALT_ROUNDS = 10;
 
-// metodo de comparar bd  e input(react)
-const CompararPassword=async(Password,Parametro)=>{
-    return await Encriptar.compare(Password,Parametro)
-}
+const PasswordEncriptar = async (password) => {
+  if (!password || typeof password !== 'string') throw new Error('Password inválido');
+  return await bcrypt.hash(password, SALT_ROUNDS);
+};
 
-module.exports={PasswordEncriptar,CompararPassword}
+const CompararPassword = async (password, hashBD) => {
+  if (!password || !hashBD) return false;
+  return await bcrypt.compare(password, hashBD);
+};
+
+module.exports = { PasswordEncriptar, CompararPassword };

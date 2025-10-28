@@ -9,11 +9,12 @@ function Registrar() {
   const [ConfirmPassword, setConfirmPassword] = useState('')
   const [Name, setName] = useState('')
   const [DNI, setDNI] = useState('')
+  const [Email, setEmail] = useState('')
 
   const RegistrarSubmit = async (e) => {
     e.preventDefault()
 
-    // 🔒 Verificar que las contraseñas coincidan
+//verificacion de contraseñas 
     if (Password !== ConfirmPassword) {
       Swal.fire({
         icon: 'error',
@@ -25,27 +26,28 @@ function Registrar() {
     }
 
     try {
-      const ServidorBack = await axios.post('http://localhost:4000/server/RegistrarUsuario', {
+      const ServidorBack = await axios.post('http://localhost:3000/server/RegistrarUsuario', {
         User,
         Password,
         Name,
-        DNI
+        DNI,
+        Email
       })
 
-      // ✅ Mostrar alerta de éxito con React Icon embebido
-     Swal.fire({
-  icon: 'success',
-  title: '¡Registro exitoso!',
-  text: ServidorBack.data.mensaje || 'Usuario creado correctamente.',
-  confirmButtonColor: '#3085d6',
-});
+      Swal.fire({
+        icon: 'success',
+        title: '¡Registro exitoso!',
+        text: ServidorBack.data.mensaje || 'Usuario creado correctamente.',
+        confirmButtonColor: '#3085d6',
+      });
 
-      // Limpiar campos
       setUser('')
       setPassword('')
       setConfirmPassword('')
       setName('')
       setDNI('')
+      setEmail('')
+
     } catch (Error) {
       console.log(Error)
       Swal.fire({
@@ -70,6 +72,9 @@ function Registrar() {
 
         <label>Usuario</label>
         <input type="text" value={User} onChange={(e) => setUser(e.target.value)} />
+
+        <label>Correo Electronico</label>
+        <input type="text" value={Email} onChange={(e) => setEmail(e.target.value)} />
 
         <label>Contraseña</label>
         <input type="password" value={Password} onChange={(e) => setPassword(e.target.value)} />
