@@ -3,7 +3,7 @@ const cors = require('cors');
 const sqlite3 = require('sqlite3').verbose();
 
 const app = express();
-const PORT = 3000; 
+const PORT = 3000;
 
 app.use(express.json());
 app.use(cors());
@@ -44,6 +44,37 @@ app.post('/server/RegistrarUsuario', async (req, res) => {
     res.status(500).json({ error: 'Error del servidor' });
   }
 });
+
+app.post('/server/RegistrarProducto', async (req, res) => {
+  try {
+    const { Brand, Model, Description, Stock, Price } = req.body;
+    console.log(req.body);
+    const query = `INSERT INTO PRODUCTOS (Brand, Model, Description, Stock, Price) VALUES (?, ?, ?, ?, ?)`;
+    db.run(query, [Brand, Model, Description, Stock, Price], (err) => {
+      if (err) {
+        console.error('❌ Error al crear producto', err.message);
+        return res.status(500).json({ error: 'Error al registrar producto' });
+      }
+      console.log('✅ Producto insertado correctamente');
+      res.json({ mensaje: 'Producto registrado correctamente' });
+    });
+  } catch (error) {
+    console.error('Error en servidor:', error);
+    res.status(500).json({ error: 'Error del servidor' });
+  }
+});
+
+app.get('/server/Productos', (req, res) => {
+  const query = 'SELECT * FROM PRODUCTOS'
+  db.all(query, [], (err, rows) => {
+    if (err) {
+      console.error(err)
+      res.status(500).json({ error: err.message })
+    } else {
+      res.json(rows)
+    }
+  })
+})
 
 app.listen(PORT, () => {
   console.log(`🦖 Servidor corriendo en http://localhost:${PORT}`);

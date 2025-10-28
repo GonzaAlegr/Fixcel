@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useState } from 'react'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import '../Layouts.css'
 
@@ -14,7 +15,7 @@ function Registrar() {
   const RegistrarSubmit = async (e) => {
     e.preventDefault()
 
-//verificacion de contraseñas 
+    //verificacion de contraseñas 
     if (Password !== ConfirmPassword) {
       Swal.fire({
         icon: 'error',
@@ -60,31 +61,31 @@ function Registrar() {
   }
 
   return (
-    <div className="registro-container">
-      <h1 className="registro-titulo">Registro</h1>
+      <div className="registro-container">
+        <h1 className="registro-titulo">Registro</h1>
 
-      <form className="registro-form" onSubmit={RegistrarSubmit}>
-        <label>Nombre</label>
-        <input type="text" value={Name} onChange={(e) => setName(e.target.value)} />
+        <form className="registro-form" onSubmit={RegistrarSubmit}>
+          <label>Nombre</label>
+          <input type="text" value={Name} onChange={(e) => setName(e.target.value)} />
 
-        <label>DNI</label>
-        <input type="text" value={DNI} onChange={(e) => setDNI(e.target.value)} />
+          <label>DNI</label>
+          <input type="text" value={DNI} onChange={(e) => setDNI(e.target.value)} />
 
-        <label>Usuario</label>
-        <input type="text" value={User} onChange={(e) => setUser(e.target.value)} />
+          <label>Usuario</label>
+          <input type="text" value={User} onChange={(e) => setUser(e.target.value)} />
 
-        <label>Correo Electronico</label>
-        <input type="text" value={Email} onChange={(e) => setEmail(e.target.value)} />
+          <label>Correo Electronico</label>
+          <input type="text" value={Email} onChange={(e) => setEmail(e.target.value)} />
 
-        <label>Contraseña</label>
-        <input type="password" value={Password} onChange={(e) => setPassword(e.target.value)} />
+          <label>Contraseña</label>
+          <input type="password" value={Password} onChange={(e) => setPassword(e.target.value)} />
 
-        <label>Confirmar Contraseña</label>
-        <input type="password" value={ConfirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-
-        <input className="btn-registrar" type="submit" value="Registrar" />
-      </form>
-    </div>
+          <label>Confirmar Contraseña</label>
+          <input type="password" value={ConfirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+          <Link to="/inicio">Iniciar sesion</Link>
+          <input className="btn-registrar" type="submit" value="Registrar" />
+        </form>
+      </div>
   )
 }
 

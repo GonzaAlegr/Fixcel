@@ -11,6 +11,7 @@ header {
 .menu {
   display: flex;
   gap: 25px;
+  height: 50px;
 }
 
 .menu a {
@@ -222,4 +223,73 @@ footer {
 .sweetalert-icon {
   font-size: 60px;
   color: #22c55e; /* Verde éxito */
+}
+
+.body{
+  background-color: rgb(255, 255, 255);
+}
+
+.productos-container {
+  padding: 20px;
+  text-align: center;
+}
+
+.titulo {
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+  color: #222;
+}
+
+.grid-productos {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.card-producto {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.card-producto:hover {
+  transform: translateY(-5px);
+}
+
+.img-producto {
+  width: 100%;
+  height: 200px;
+  object-fit: cover; /* mantiene proporciones sin deformar */
+  border-radius: 10px;
+}
+
+.descripcion {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+/* 🔥 BOTÓN COMPRAR CON DEGRADADO */
+.btn-comprar {
+  margin-top: 10px;
+  background: linear-gradient(90deg, #1e3a8a, #22c55e);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: opacity 0.3s, transform 0.2s;
+}
+
+.btn-comprar:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+}
+
+.btn-comprar:active {
+  transform: scale(0.97);
 }
