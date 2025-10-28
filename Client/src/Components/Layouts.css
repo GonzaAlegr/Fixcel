@@ -293,3 +293,72 @@ footer {
 .btn-comprar:active {
   transform: scale(0.97);
 }
+
+.inicio-container {
+  text-align: center;
+  padding-bottom: 50px;
+  background-color: #fff;
+}
+
+/* Logo principal */
+.inicio-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.inicio-logo {
+  width: 120px;
+}
+
+/* Eslogan con degradado */
+.inicio-eslogan {
+  font-size: 1.8rem;
+  margin: 20px 0 40px;
+  font-weight: 700;
+   background: linear-gradient(90deg, #22c55e,#1e3a8a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  letter-spacing: 1px;
+  text-shadow: 0 10px 20px rgba(133, 133, 133, 0.781);
+}
+
+/* Carrusel */
+.inicio-carrusel {
+  position: relative;
+  width: 80%;
+  height: 350px;
+  margin: 0 auto 50px;
+  overflow: hidden;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+.carrusel-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 1s ease;
+}
+
+/* Productos destacados */
+.productos-destacados {
+  padding: 20px;
+}
+
+.productos-destacados .titulo {
+  color: #1e3a8a;
+  font-weight: bold;
+  margin-bottom: 25px;
+}
+
+.cajalogo{
+  background: linear-gradient(90deg, #1e3a8a, #22c55e);
+  width: 30%;
+  border-radius: 15px;
+  align-items: center;
+  box-shadow: 0 10px 20px rgba(133, 133, 133, 0.781);
+}
