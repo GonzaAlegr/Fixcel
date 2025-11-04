@@ -41,7 +41,8 @@ const db= new SQLite.Database(db_Ubicacion, (Error)=>{
              Model TEXT,
              Description TEXT,
              Stock INTEGER,
-             Price INTEGER
+             Price INTEGER,
+             Imagen TEXT
             )`,(Error)=>{
                 if(Error){
                     console.log('No se pudo crear la Tabla PRODUCTOS ❗')

@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import '../Layouts.css'
 
-function iniciose() {
+function Iniciose() {
   const [User, setUser] = useState('')
   const [Password, setPassword] = useState('')
   const navigate = useNavigate()
@@ -13,29 +13,31 @@ function iniciose() {
     e.preventDefault()
 
     if (!User || !Password) {
-      Swal.fire({
+      return Swal.fire({
         icon: 'warning',
         title: 'Campos vacíos',
         text: 'Por favor completa todos los campos.',
         confirmButtonColor: '#d33',
       })
-      return
     }
 
     try {
       const ServidorBack = await axios.post('http://localhost:3000/server/IniciarSesion', {
         User,
-        Password
+        Password,
       })
 
       if (ServidorBack.data.exito) {
+        localStorage.setItem('usuario', JSON.stringify(ServidorBack.data.usuario))
+
         Swal.fire({
           icon: 'success',
           title: '¡Inicio de sesión exitoso!',
           text: ServidorBack.data.mensaje || 'Bienvenido.',
           confirmButtonColor: '#3085d6',
         }).then(() => {
-          navigate('/iniciose') // redirige al componente de inicio (Iniciose)
+          navigate('/main')
+          window.location.reload() // 🔁 refresca la página después de redirigir
         })
       } else {
         Swal.fire({
@@ -45,9 +47,8 @@ function iniciose() {
           confirmButtonColor: '#d33',
         })
       }
-
-    } catch (Error) {
-      console.log(Error)
+    } catch (error) {
+      console.log(error)
       Swal.fire({
         icon: 'error',
         title: 'Error en el servidor',
@@ -63,18 +64,10 @@ function iniciose() {
 
       <form className="registro-form" onSubmit={IniciarSubmit}>
         <label>Usuario</label>
-        <input
-          type="text"
-          value={User}
-          onChange={(e) => setUser(e.target.value)}
-        />
+        <input type="text" value={User} onChange={(e) => setUser(e.target.value)} />
 
         <label>Contraseña</label>
-        <input
-          type="password"
-          value={Password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <input type="password" value={Password} onChange={(e) => setPassword(e.target.value)} />
 
         <Link to="/registro">¿No tenés cuenta? Registrate</Link>
         <input className="btn-registrar" type="submit" value="Ingresar" />
@@ -83,4 +76,4 @@ function iniciose() {
   )
 }
 
-export default iniciose
+export default Iniciose

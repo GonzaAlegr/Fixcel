@@ -18,7 +18,7 @@ function Productos() {
       <div className="grid-productos">
         {productos.map((p) => (
           <div className="card-producto" key={p.ID}>
-            <img src={`/images/${p.Model}.jpg`} alt={p.Model} className="img-producto" />
+            <img src={`../Global/img/${p.Imagen}`} alt={p.Imagen} className="img-producto" />
             <h3>{p.Brand} {p.Model}</h3>
             <p className="descripcion">{p.Description}</p>
             <p><b>Stock:</b> {p.Stock}</p>

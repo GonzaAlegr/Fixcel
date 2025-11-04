@@ -10,12 +10,13 @@ function AgregarProducto() {
   const [Description, setDescription] = useState('')
   const [Stock, setStock] = useState('')
   const [Price, setPrice] = useState('')
+  const [Imagen, setImagen] = useState('')
 
   const AgregarProductoSubmit = async (e) => {
     e.preventDefault()
 
     // Validación básica
-    if (!Brand || !Model || !Description || !Stock || !Price) {
+    if (!Brand || !Model || !Description || !Stock || !Price || !Imagen) {
       Swal.fire({
         icon: 'error',
         title: 'Campos incompletos',
@@ -31,7 +32,8 @@ function AgregarProducto() {
         Model,
         Description,
         Stock,
-        Price
+        Price,
+        Imagen
       })
 
       Swal.fire({
@@ -47,6 +49,7 @@ function AgregarProducto() {
       setDescription('')
       setStock('')
       setPrice('')
+      setImagen('')
 
     } catch (Error) {
       console.error(Error)
@@ -69,6 +72,13 @@ function AgregarProducto() {
           type="text"
           value={Brand}
           onChange={(e) => setBrand(e.target.value)}
+        />
+
+        <label>Imagen</label>
+        <input
+          type="file"
+          value={Imagen}
+          onChange={(e) => setImagen(e.target.value)}
         />
 
         <label>Modelo</label>

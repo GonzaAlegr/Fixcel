@@ -8,30 +8,53 @@ header {
   box-shadow: 0 10px 20px rgba(133, 133, 133, 0.781);
 
 }
+
 .menu {
   display: flex;
   gap: 25px;
   height: 50px;
 }
 
-.menu a {
+.menu a,
+button {
   border-radius: 14px;
   padding: 15px;
   background-color: #1e3b8a54;
   text-decoration: none;
   color: #ffffff;
   font-weight: 500;
-  transition:  0.5s ease;
+  transition: 0.5s ease;
+}
+
+.btn-logout {
+  background-color: #ffffff5d;
+  color: #1e3a8a;
+  font-size: 100%;
+}
+
+.menu button {
+  text-decoration: none;
+  border-bottom: none;
+  border: none;
+  font-weight: 500;
+}
+
+.menu button:hover {
+  background-color: #1e3b8a54;
+  color: #ffffff;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #ffffff5d;
 }
 
 .menu a:hover {
   background-color: #ffffff41;
   color: #ffffff;
   transform: scale(1.05);
-  box-shadow: 0 0 20px  #1e3b8a7e;
+  box-shadow: 0 0 20px #1e3b8a7e;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -44,8 +67,8 @@ footer {
   margin-top: auto;
 }
 
-.prueba{
-    height: 1000px;
+.prueba {
+  height: 1000px;
 }
 
 .footer {
@@ -72,7 +95,7 @@ footer {
   margin-top: 15px;
 }
 
-.logofo{
+.logofo {
   width: 100px;
   border-radius: 14px;
   padding: 15px;
@@ -80,27 +103,27 @@ footer {
   text-decoration: none;
   color: #ffffff;
   font-weight: 500;
-  transition:  0.5s ease;
+  transition: 0.5s ease;
   font-size: 1.8rem;
   display: block;
   margin: 0 auto;
   text-align: center;
 }
 
-.logofo:hover{
+.logofo:hover {
   background-color: #1e3b8a8f;
   transform: scale(1.05);
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.747);
 }
 
 .letra {
-  width: 100px;            
+  width: 100px;
   margin-left: 15px;
   opacity: 0;
   transform: translateX(-30px);
   transition: all 0.7s ease;
   pointer-events: none;
-  margin-bottom:5px;
+  margin-bottom: 5px;
 }
 
 .logo-container:hover .letra {
@@ -108,27 +131,29 @@ footer {
   transform: translateX(0);
 }
 
-.eng{
-    width: 15%;;
+.eng {
+  width: 15%;
+  ;
 }
 
-.engf{
-    width: 4%;
+.engf {
+  width: 4%;
 }
 
 .registro-container {
   background-color: #fff;
   width: 420px;
   margin: 80px auto;
-  padding: 0 40px 40px; /* top en 0 para que el título pueda "salir" hacia arriba */
+  padding: 0 40px 40px;
+  /* top en 0 para que el título pueda "salir" hacia arriba */
   border-radius: 8px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   text-align: center;
   overflow: hidden;
-  transition: all 0.3s ;
+  transition: all 0.3s;
 }
 
-.registro-container:hover{
+.registro-container:hover {
   transform: scale(1.02);
 }
 
@@ -137,7 +162,7 @@ footer {
   background: linear-gradient(90deg, #1e3a8a, #22c55e);
   color: #fff;
   padding: 18px 40px;
-  margin: 0 -40px 20px;     
+  margin: 0 -40px 20px;
   font-size: 1.8rem;
   letter-spacing: 1px;
   box-shadow: none;
@@ -204,13 +229,15 @@ footer {
 
 .mensaje {
   margin-top: 15px;
-  color: #22c55e; /* verde éxito */
+  color: #22c55e;
+  /* verde éxito */
   font-weight: 600;
   text-align: center;
 }
 
 .mensaje.error {
-  color: #ef4444; /* rojo para error */
+  color: #ef4444;
+  /* rojo para error */
 }
 
 .sweetalert-icon-container {
@@ -222,10 +249,11 @@ footer {
 
 .sweetalert-icon {
   font-size: 60px;
-  color: #22c55e; /* Verde éxito */
+  color: #22c55e;
+  /* Verde éxito */
 }
 
-.body{
+.body {
   background-color: rgb(255, 255, 255);
 }
 
@@ -249,7 +277,7 @@ footer {
 .card-producto {
   background: white;
   border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   padding: 15px;
   text-align: center;
   transition: transform 0.2s ease;
@@ -262,7 +290,8 @@ footer {
 .img-producto {
   width: 100%;
   height: 200px;
-  object-fit: cover; /* mantiene proporciones sin deformar */
+  object-fit: cover;
+  /* mantiene proporciones sin deformar */
   border-radius: 10px;
 }
 
@@ -318,7 +347,7 @@ footer {
   font-size: 1.8rem;
   margin: 20px 0 40px;
   font-weight: 700;
-   background: linear-gradient(90deg, #22c55e,#1e3a8a);
+  background: linear-gradient(90deg, #22c55e, #1e3a8a);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-align: center;
@@ -334,7 +363,7 @@ footer {
   margin: 0 auto 50px;
   overflow: hidden;
   border-radius: 15px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
 .carrusel-img {
@@ -355,10 +384,14 @@ footer {
   margin-bottom: 25px;
 }
 
-.cajalogo{
+.cajalogo {
   background: linear-gradient(90deg, #1e3a8a, #22c55e);
   width: 30%;
   border-radius: 15px;
   align-items: center;
   box-shadow: 0 10px 20px rgba(133, 133, 133, 0.781);
+}
+
+.card-producto p {
+  color: #1e3a8a;
 }
