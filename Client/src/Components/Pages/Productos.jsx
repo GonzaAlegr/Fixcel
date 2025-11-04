@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 import '../Layouts.css'
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+
+const imagenes = import.meta.glob('../Global/img/*', { eager: true })
 
 function Productos() {
   const [productos, setProductos] = useState([])
@@ -12,23 +14,40 @@ function Productos() {
       .catch(err => console.error('Error al obtener productos:', err))
   }, [])
 
+  const obtenerImagen = (nombre) => {
+    const ruta = `../Global/img/${nombre}`
+    if (imagenes[ruta]) {
+      return imagenes[ruta].default
+    } else {
+      return imagenes['../Global/img/default.jpg'].default
+    }
+  }
+
   return (
     <div className="productos-container">
       <h2 className="titulo">Productos disponibles</h2>
+
       <div className="grid-productos">
         {productos.map((p) => (
-          <div className="card-producto" key={p.ID}>
-            <img src={`../Global/img/${p.Imagen}`} alt={p.Imagen} className="img-producto" />
+          <Link to={`/producto/${p.ID}`} key={p.ID} className="card-producto">
+            <img
+              src={obtenerImagen(p.Imagen)}
+              alt={p.Model}
+              className="img-producto"
+            />
             <h3>{p.Brand} {p.Model}</h3>
             <p className="descripcion">{p.Description}</p>
             <p><b>Stock:</b> {p.Stock}</p>
             <p><b>Precio:</b> ${p.Price}</p>
-            <button className="btn-comprar">Comprar</button>
-          </div>
+            <div className="botones">
+              <button className="btn-verde">Añadir al carrito</button>
+              <button className="btn-comprar">Comprar</button>
+            </div>
+          </Link>
         ))}
-        <Link to="/regipro">Registrar Producto</Link>
       </div>
-      
+
+      <Link to="/regipro" className="btn-registrar">Registrar nuevo producto</Link>
     </div>
   )
 }

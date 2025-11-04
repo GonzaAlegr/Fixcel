@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useState } from 'react'
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import '../Layouts.css'
 
@@ -10,12 +10,11 @@ function AgregarProducto() {
   const [Description, setDescription] = useState('')
   const [Stock, setStock] = useState('')
   const [Price, setPrice] = useState('')
-  const [Imagen, setImagen] = useState('')
+  const [Imagen, setImagen] = useState(null)
 
   const AgregarProductoSubmit = async (e) => {
     e.preventDefault()
 
-    // Validación básica
     if (!Brand || !Model || !Description || !Stock || !Price || !Imagen) {
       Swal.fire({
         icon: 'error',
@@ -27,14 +26,22 @@ function AgregarProducto() {
     }
 
     try {
-      const ServidorBack = await axios.post('http://localhost:3000/server/RegistrarProducto', {
+      // 🔹 Solo tomamos el nombre del archivo
+      const ImagenNombre = Imagen.name
+
+      const productoData = {
         Brand,
         Model,
         Description,
         Stock,
         Price,
-        Imagen
-      })
+        Imagen: ImagenNombre,
+      }
+
+      const ServidorBack = await axios.post(
+        'http://localhost:3000/server/RegistrarProducto',
+        productoData
+      )
 
       Swal.fire({
         icon: 'success',
@@ -43,14 +50,13 @@ function AgregarProducto() {
         confirmButtonColor: '#3085d6',
       })
 
-      // Limpieza del formulario
+      // 🔹 Limpiar formulario
       setBrand('')
       setModel('')
       setDescription('')
       setStock('')
       setPrice('')
-      setImagen('')
-
+      setImagen(null)
     } catch (Error) {
       console.error(Error)
       Swal.fire({
@@ -68,45 +74,26 @@ function AgregarProducto() {
 
       <form className="registro-form" onSubmit={AgregarProductoSubmit}>
         <label>Marca</label>
-        <input
-          type="text"
-          value={Brand}
-          onChange={(e) => setBrand(e.target.value)}
-        />
+        <input type="text" value={Brand} onChange={(e) => setBrand(e.target.value)} />
 
         <label>Imagen</label>
         <input
           type="file"
-          value={Imagen}
-          onChange={(e) => setImagen(e.target.value)}
+          accept="image/*"
+          onChange={(e) => setImagen(e.target.files[0])}
         />
 
         <label>Modelo</label>
-        <input
-          type="text"
-          value={Model}
-          onChange={(e) => setModel(e.target.value)}
-        />
+        <input type="text" value={Model} onChange={(e) => setModel(e.target.value)} />
 
         <label>Descripción</label>
-        <textarea
-          value={Description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
+        <textarea value={Description} onChange={(e) => setDescription(e.target.value)} />
 
         <label>Stock</label>
-        <input
-          type="number"
-          value={Stock}
-          onChange={(e) => setStock(e.target.value)}
-        />
+        <input type="number" value={Stock} onChange={(e) => setStock(e.target.value)} />
 
         <label>Precio</label>
-        <input
-          type="number"
-          value={Price}
-          onChange={(e) => setPrice(e.target.value)}
-        />
+        <input type="number" value={Price} onChange={(e) => setPrice(e.target.value)} />
 
         <Link to="/productos">Ver productos</Link>
         <input className="btn-registrar" type="submit" value="Guardar producto" />

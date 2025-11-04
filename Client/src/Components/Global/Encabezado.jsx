@@ -9,9 +9,11 @@ import Servicios from '../Pages/Servicios.jsx'
 import Productos from '../Pages/Productos.jsx'
 import Inicio from '../Pages/Inicio.jsx'
 import AgregarProducto from '../Pages/AgregarProducto.jsx'
+import ProductoDetalle from '../Pages/ProductoDetalle.jsx'
 
 function Encabezado() {
   const [usuario, setUsuario] = useState(null)
+  const [mostrarCuenta, setMostrarCuenta] = useState(false)
 
   useEffect(() => {
     const user = localStorage.getItem('usuario')
@@ -21,8 +23,21 @@ function Encabezado() {
   const cerrarSesion = () => {
     localStorage.removeItem('usuario')
     setUsuario(null)
+    setMostrarCuenta(false)
     window.location.href = '/main'
   }
+
+  // Cierra el panel al hacer clic fuera
+  useEffect(() => {
+    const cerrarAlClickFuera = (e) => {
+      const panel = document.querySelector('.panel-cuenta')
+      if (panel && !panel.contains(e.target) && !e.target.classList.contains('btn-cuenta')) {
+        setMostrarCuenta(false)
+      }
+    }
+    document.addEventListener('click', cerrarAlClickFuera)
+    return () => document.removeEventListener('click', cerrarAlClickFuera)
+  }, [])
 
   return (
     <Router>
@@ -45,14 +60,32 @@ function Encabezado() {
             </>
           ) : (
             <>
-              <Link to="/cuenta" className="cuenta-link">
+              <button
+                className="btn-cuenta"
+                onClick={() => setMostrarCuenta(!mostrarCuenta)}
+              >
                 Tu cuenta
-              </Link>
-              <button onClick={cerrarSesion} className="btn-logout">Cerrar sesión</button>
+              </button>
             </>
           )}
         </nav>
       </header>
+
+      {/* Panel lateral */}
+      {mostrarCuenta && (
+        <div className="panel-cuenta">
+          <div className="panel-header">
+            <h2>Tu cuenta</h2>
+            <button className="cerrar-panel" onClick={() => setMostrarCuenta(false)}>×</button>
+          </div>
+          <div className="panel-body">
+            <p><strong>Usuario:</strong> {usuario?.user}</p>
+            <p><strong>Nombre:</strong> {usuario?.nombre}</p>
+            <p><strong>Email:</strong> {usuario?.email}</p>
+            <button onClick={cerrarSesion} className="btn-logout">Cerrar sesión</button>
+          </div>
+        </div>
+      )}
 
       <Routes>
         <Route path="/main" element={<Inicio />} />
@@ -61,6 +94,7 @@ function Encabezado() {
         <Route path="/productos" element={<Productos />} />
         <Route path="/servi" element={<Servicios />} />
         <Route path="/regipro" element={<AgregarProducto />} />
+        <Route path="/producto/:id" element={<ProductoDetalle />} />
       </Routes>
     </Router>
   )

@@ -12,6 +12,7 @@ app.use(cors());
 const loginRouter = require('./src/Router/Login.Router.js');
 app.use('/server', loginRouter);
 
+
 // Conexión a la base de datos
 const db = new sqlite3.Database('./src/Database/db.db', (err) => {
   if (err) {
@@ -60,6 +61,22 @@ app.get('/server/Productos', (req, res) => {
     }
   })
 })
+
+app.get('/server/Productos/:id', (req, res) => {
+  const { id } = req.params;
+  const query = 'SELECT * FROM PRODUCTOS WHERE ID = ?';
+
+  db.get(query, [id], (err, row) => {
+    if (err) {
+      console.error('❌ Error al obtener producto:', err.message);
+      return res.status(500).json({ error: 'Error al obtener producto' });
+    }
+    if (!row) {
+      return res.status(404).json({ error: 'Producto no encontrado' });
+    }
+    res.json(row);
+  });
+});
 
 app.post('/server/IniciarSesion', (req, res) => {
   const { User, Password } = req.body;
