@@ -22,6 +22,8 @@ const db = new sqlite3.Database('./src/Database/db.db', (err) => {
   }
 });
 
+
+
 const { PasswordEncriptar } = require('./src/Utils/hash');
 
 app.post('/server/RegistrarUsuario', async (req, res) => {
@@ -49,6 +51,9 @@ app.post('/server/RegistrarUsuario', async (req, res) => {
     res.status(500).json({ error: 'Error del servidor' });
   }
 });
+
+const ReparacionesRouter = require('./src/Router/Reparaciones.Router.js')
+app.use('/server', ReparacionesRouter)
 
 app.get('/server/Productos', (req, res) => {
   const query = 'SELECT * FROM PRODUCTOS'
@@ -94,7 +99,6 @@ app.post('/server/IniciarSesion', (req, res) => {
   });
 });
 
-// Rutas antiguas (no las borramos)
 app.post('/server/RegistrarProducto', async (req, res) => {
   try {
     const { Brand, Model, Description, Stock, Price, Imagen } = req.body;

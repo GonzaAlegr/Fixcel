@@ -76,13 +76,6 @@ function AgregarProducto() {
         <label>Marca</label>
         <input type="text" value={Brand} onChange={(e) => setBrand(e.target.value)} />
 
-        <label>Imagen</label>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setImagen(e.target.files[0])}
-        />
-
         <label>Modelo</label>
         <input type="text" value={Model} onChange={(e) => setModel(e.target.value)} />
 
@@ -94,6 +87,13 @@ function AgregarProducto() {
 
         <label>Precio</label>
         <input type="number" value={Price} onChange={(e) => setPrice(e.target.value)} />
+
+        <label>Imagen</label>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => setImagen(e.target.files[0])}
+        />
 
         <Link to="/productos">Ver productos</Link>
         <input className="btn-registrar" type="submit" value="Guardar producto" />

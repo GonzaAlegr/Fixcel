@@ -4,7 +4,6 @@ import '../Layouts.css'
 function Cuerpo() {
   return (
     <>
-    <div className='prueba'></div>
     </>
   )
 }
