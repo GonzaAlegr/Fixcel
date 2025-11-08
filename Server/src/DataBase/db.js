@@ -75,6 +75,22 @@ const db= new SQLite.Database(db_Ubicacion, (Error)=>{
             
 
         )
+        db.run(
+            `
+            CREATE TABLE IF NOT EXISTS Email(
+                ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                Email TEXT,
+                Asunto TEXT,              
+                Cuerpo TEXT
+                )`,(Error)=>{
+                if(Error){
+                    console.error('No se pudo crear la Tabla EMAIL ❗')
+                }
+                else{
+                    console.log('Se pudo crear la tabla EMAIL ✅')
+                }
+            }
+        )         
     }
 
 })

@@ -123,6 +123,10 @@ const FuncionesProductosRouter = require('./src/Router/FuncionesProductos.Router
 app.use('/api', FuncionesProductosRouter);
 
 
+// este e de los emails :D
+const router= require('./src/Router/Enviar.Routes')
+app.use('/api',router)
+
 // Servidor
 app.listen(PORT, () => {
   console.log(`🦖 Servidor corriendo en http://localhost:${PORT}`);
