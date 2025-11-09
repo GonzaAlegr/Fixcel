@@ -12,6 +12,9 @@ app.use(cors());
 const loginRouter = require('./src/Router/Login.Router.js');
 app.use('/server', loginRouter);
 
+const CarritoRutas = require('./src/Router/Carrito.Router.js');
+app.use('/server', CarritoRutas);
+
 
 // Conexión a la base de datos
 const db = new sqlite3.Database('./src/Database/db.db', (err) => {
@@ -118,14 +121,16 @@ app.post('/server/RegistrarProducto', async (req, res) => {
   }
 });
 
+
+
 // Rutas nuevas de FuncionesProductos
 const FuncionesProductosRouter = require('./src/Router/FuncionesProductos.Router');
 app.use('/api', FuncionesProductosRouter);
 
 
 // este e de los emails :D
-const router= require('./src/Router/Enviar.Routes')
-app.use('/api',router)
+const router = require('./src/Router/Enviar.Routes')
+app.use('/api', router)
 
 // Servidor
 app.listen(PORT, () => {

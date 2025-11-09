@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import Swal from 'sweetalert2'
 import '../Layouts.css'
 
 // 🔹 Importa todas las imágenes de forma segura
@@ -27,6 +28,43 @@ function ProductoDetalle() {
       .catch(err => console.error('Error al cargar recomendados:', err))
   }, [id])
 
+  const agregarAlCarrito = async (productoID, e) => {
+    e.preventDefault()
+    const usuario = JSON.parse(localStorage.getItem('usuario'))
+
+    if (!usuario) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Inicia sesión',
+        text: 'Debes iniciar sesión para agregar productos al carrito 🧑‍💻',
+        confirmButtonColor: '#1e3a8a',
+      })
+      return
+    }
+
+    try {
+      const res = await axios.post('http://localhost:3000/server/AgregarAlCarrito', {
+        user: usuario.user,
+        productoID,
+        cantidad: 1
+      })
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Producto agregado',
+        text: res.data.mensaje || 'El producto se agregó correctamente al carrito 🛒',
+        showConfirmButton: false,
+        timer: 1800
+      })
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: '❌ Hubo un problema al agregar el producto al carrito.',
+      })
+    }
+  }
+
   // 🔹 Función para obtener imagen o usar una por defecto
   const obtenerImagen = (nombre) => {
     const ruta = `../Global/img/${nombre}`
@@ -38,6 +76,7 @@ function ProductoDetalle() {
   }
 
   if (!producto) return <p className="cargando">Cargando producto...</p>
+
 
   return (
     <div className="producto-detalle">
@@ -56,7 +95,12 @@ function ProductoDetalle() {
           <p className="precio"><b>Precio:</b> ${producto.Price}</p>
 
           <div className="botones">
-            <button className="btn-verde">Añadir al carrito</button>
+            <button
+              className="btn-verde"
+              onClick={(e) => agregarAlCarrito(producto.ID, e)}
+            >
+              Añadir al carrito
+            </button>
             <button className="btn-comprar">Comprar ahora</button>
           </div>
         </div>

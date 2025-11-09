@@ -939,3 +939,62 @@ input[type="number"] {
   margin-left: 300px;
   display: flex;
 }
+
+.btn-rojo {
+  margin-top: 10px;
+  background: #993232;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.2s ease-in;
+}
+
+.btn-rojo:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+  background-color:#ee4444;
+}
+
+.productos-containerr {
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.card-productoo {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  padding: 15px;
+  text-align: center;
+  transition: 0.2s ease;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  height: min-content;
+}
+
+.card-productoo:hover {
+  transform: translateY(-5px);
+}
+
+.descripcionn{
+  color: #1e3a8a;
+  height: 150px;
+}
+
+.carrito-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.carrito-container h2{
+  color: #1e3a8a;
+}

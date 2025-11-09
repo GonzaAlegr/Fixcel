@@ -10,6 +10,7 @@ import Productos from '../Pages/Productos.jsx'
 import Inicio from '../Pages/Inicio.jsx'
 import AgregarProducto from '../Pages/AgregarProducto.jsx'
 import ProductoDetalle from '../Pages/ProductoDetalle.jsx'
+import Carrito from '../Pages/Carrito.jsx'
 
 function Encabezado() {
   const [usuario, setUsuario] = useState(null)
@@ -82,6 +83,10 @@ function Encabezado() {
             <p><strong>Usuario:</strong> {usuario?.user}</p>
             <p><strong>Nombre:</strong> {usuario?.nombre}</p>
             <p><strong>Email:</strong> {usuario?.email}</p>
+            <Link to="/carrito">
+              <button className="btn-ver-carrito">Ver carrito 🛒</button>
+            </Link>
+
             <button onClick={cerrarSesion} className="btn-logout">Cerrar sesión</button>
           </div>
         </div>
@@ -95,6 +100,7 @@ function Encabezado() {
         <Route path="/servi" element={<Servicios />} />
         <Route path="/regipro" element={<AgregarProducto />} />
         <Route path="/producto/:id" element={<ProductoDetalle />} />
+        <Route path="/carrito" element={<Carrito />} />
       </Routes>
     </Router>
   )

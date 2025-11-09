@@ -103,7 +103,6 @@ function Inicio() {
               <p className="descripcion">{p.Description}</p>
               <p><b>Precio:</b> ${p.Price}</p>
               <div className="botones">
-                <button className="btn-verde">Añadir al carrito</button>
                 <button className="btn-comprar" onClick={() => navigate(`/producto/${p.ID}`)}>
                   Comprar ahora
                 </button>
