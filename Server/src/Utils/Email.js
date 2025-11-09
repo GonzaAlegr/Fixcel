@@ -1,7 +1,7 @@
 // 📧 utils/enviarCorreo.js
 const nodemailer = require('nodemailer');
 const  path =require('path');
-
+require('dotenv').config();
 /**
  * Envía un correo electrónico utilizando el transporter configurado.
  * @param {string} destinatario - Dirección de correo del receptor.
