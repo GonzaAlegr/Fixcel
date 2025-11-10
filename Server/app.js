@@ -15,6 +15,8 @@ app.use('/server', loginRouter);
 const CarritoRutas = require('./src/Router/Carrito.Router.js');
 app.use('/server', CarritoRutas);
 
+const NewsletterRouter = require('./src/Router/Newsletter.Router.js');
+app.use('/server', NewsletterRouter);
 
 // Conexión a la base de datos
 const db = new sqlite3.Database('./src/Database/db.db', (err) => {

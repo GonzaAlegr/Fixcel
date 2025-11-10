@@ -83,7 +83,7 @@ function Productos() {
               />
               <h3>{p.Brand} {p.Model}</h3>
               <p className="descripcion">{p.Description}</p>
-              <p><b>Stock:</b> {p.Stock}</p>
+              <p>Stock:{p.Stock}</p>
               <p><b>Precio:</b> ${p.Price}</p>
             </Link>
 

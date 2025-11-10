@@ -23,7 +23,7 @@ async function enviarCorreo(destinatario, asunto, cuerpo) {
     // --- Configuración del correo ---
     const mailOptions = {
       // Remitente del correo (nombre visible + dirección de correo configurada en las variables de entorno)
-      from: `Fixcell acá no se q pondrias abril :P" <${process.env.EMAIL_USER}>`,
+      from: `Fixcel" <${process.env.EMAIL_USER}>`,
 
       // Dirección de correo del destinatario (se puede pasar como parámetro)
       to: destinatario,
@@ -57,8 +57,7 @@ async function enviarCorreo(destinatario, asunto, cuerpo) {
 
     <!-- Firma profesional del docente -->
     <div style="text-align: center; font-size: 13px; color: #555;">
-      <strong>Gente de Fixcell (Ejemplo)</strong><br>
-      Acá no se q va”<br>
+      <strong>Gente de Fixcell</strong><br><br>
       <a href="mailto:${process.env.EMAIL_USER}" style="color: #007BFF;">${process.env.EMAIL_USER}</a><br>
       <a href="https://sites.google.com/view/tecnica1montegrande/inicio" style="color: #007BFF;">www.eest1.com.ar</a>
     </div>

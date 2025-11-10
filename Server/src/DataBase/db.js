@@ -1,21 +1,21 @@
 // variable = dependencia (libreria)
-const SQLite = require('sqlite3')
+const SQLite = require('sqlite3');
 //para ubi. elementos
-const path = require('path')
+const path = require('path');
 
 //ubi + name de la bd
-const db_Ubicacion = path.resolve(__dirname, 'db.db')
+const db_Ubicacion = path.resolve(__dirname, 'db.db');
 
 //creamos db junto a las tablas
 const db = new SQLite.Database(db_Ubicacion, (Error) => {
     //si hay error que lo indique
     if (Error) {
-        console.error('No se Pudo crear la BD ❗')
-    }
-    else {
-        console.log('La BD se creo Correctamente ✅')
-        db.run(
-            `
+        console.error('No se Pudo crear la BD ❗');
+    } else {
+        console.log('La BD se creo Correctamente ✅');
+
+        // Tabla Usuarios
+        db.run(`
            CREATE TABLE IF NOT EXISTS Usuarios(
            DNI TEXT PRIMARY KEY,
            User TEXT UNIQUE,
@@ -24,17 +24,14 @@ const db = new SQLite.Database(db_Ubicacion, (Error) => {
            Email TEXT UNIQUE 
             )`, (Error) => {
             if (Error) {
-                console.log('No se pudo crear la Tabla USUARIOS ❗')
+                console.log('No se pudo crear la Tabla USUARIOS ❗');
+            } else {
+                console.log('Se creo la Tabla USUARIOS ✅');
             }
-            else {
-                console.log('Se creo la Tabla USUARIOS ✅')
-            }
-        }
+        });
 
-
-        )
-        db.run(
-            `
+        // Tabla Productos
+        db.run(`
             CREATE TABLE IF NOT EXISTS Productos(
              ID INTEGER PRIMARY KEY AUTOINCREMENT,
              Brand TEXT,
@@ -45,17 +42,14 @@ const db = new SQLite.Database(db_Ubicacion, (Error) => {
              Imagen TEXT
             )`, (Error) => {
             if (Error) {
-                console.log('No se pudo crear la Tabla PRODUCTOS ❗')
+                console.log('No se pudo crear la Tabla PRODUCTOS ❗');
+            } else {
+                console.log('Se creo la Tabla PRODUCTOS ✅');
             }
-            else {
-                console.log('Se creo la Tabla PRODUCTOS ✅')
-            }
-        }
+        });
 
-
-        )
-        db.run(
-            `
+        // Tabla Carrito
+        db.run(`
         CREATE TABLE IF NOT EXISTS Carrito (
             ID INTEGER PRIMARY KEY AUTOINCREMENT,
             User TEXT,
@@ -64,14 +58,14 @@ const db = new SQLite.Database(db_Ubicacion, (Error) => {
             FOREIGN KEY (ProductoID) REFERENCES Productos(ID)
             )`, (Error) => {
             if (Error) {
-                console.error('No se pudo crear la Tabla Carrito ❗')
+                console.error('No se pudo crear la Tabla Carrito ❗');
+            } else {
+                console.log('Se pudo crear la tabla Carrito ✅');
             }
-            else {
-                console.log('Se pudo crear la tabla Carrito ✅')
-            }
-        })
-        db.run(
-            `
+        });
+
+        // Tabla Reparaciones
+        db.run(`
             CREATE TABLE IF NOT EXISTS Reparaciones(
              ID INTEGER PRIMARY KEY AUTOINCREMENT,
              Dni TEXT ,
@@ -82,17 +76,14 @@ const db = new SQLite.Database(db_Ubicacion, (Error) => {
              FOREIGN KEY (User) REFERENCES Usuarios(User)
             )`, (Error) => {
             if (Error) {
-                console.log('No se pudo crear la Tabla REPARACIONES ❗')
+                console.log('No se pudo crear la Tabla REPARACIONES ❗');
+            } else {
+                console.log('Se creo la Tabla REPARACIONES ✅');
             }
-            else {
-                console.log('Se creo la Tabla REPARACIONES ✅')
-            }
-        }
+        });
 
-
-        )
-        db.run(
-            `
+        // Tabla Email
+        db.run(`
             CREATE TABLE IF NOT EXISTS Email(
                 ID INTEGER PRIMARY KEY AUTOINCREMENT,
                 Email TEXT,
@@ -100,15 +91,25 @@ const db = new SQLite.Database(db_Ubicacion, (Error) => {
                 Cuerpo TEXT
                 )`, (Error) => {
             if (Error) {
-                console.error('No se pudo crear la Tabla EMAIL ❗')
+                console.error('No se pudo crear la Tabla EMAIL ❗');
+            } else {
+                console.log('Se pudo crear la tabla EMAIL ✅');
             }
-            else {
-                console.log('Se pudo crear la tabla EMAIL ✅')
-            }
-        }
-        )
-    }
+        });
 
-})
+        // 🆕 Tabla Newsletter
+        db.run(`
+            CREATE TABLE IF NOT EXISTS Newsletter (
+                ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                Email TEXT UNIQUE
+            )`, (Error) => {
+            if (Error) {
+                console.error('No se pudo crear la Tabla NEWSLETTER ❗');
+            } else {
+                console.log('Se creo la Tabla NEWSLETTER ✅');
+            }
+        });
+    }
+});
 
 module.exports = db;
