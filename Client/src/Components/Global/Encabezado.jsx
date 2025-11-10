@@ -84,7 +84,7 @@ function Encabezado() {
             <p><strong>Nombre:</strong> {usuario?.nombre}</p>
             <p><strong>Email:</strong> {usuario?.email}</p>
             <Link to="/carrito">
-              <button className="btn-ver-carrito">Ver carrito 🛒</button>
+              <button className="btn-verde">Ver carrito 🛒</button>
             </Link>
 
             <button onClick={cerrarSesion} className="btn-logout">Cerrar sesión</button>

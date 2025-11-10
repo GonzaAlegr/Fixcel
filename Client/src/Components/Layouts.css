@@ -27,19 +27,13 @@ button {
   font-weight: 500;
   transition: 0.5s ease;
 }
-
-.btn-logout {
-  background-color: #ffffff;
-  color: #1e3a8a;
-  font-size: 100%;
-  margin-bottom: 30px;
-}
-
+ 
 .btn-logout {
   text-decoration: none;
   border-bottom: none;
   border: none;
   font-weight: 500;
+  display: flex;
 }
 
 .btn-logout:hover {
@@ -383,20 +377,24 @@ body {
   color: #1e3a8a;
 }
 
+.panel-cuenta p {
+  display: flex;
+}
+
 /* Panel lateral de cuenta */
 .panel-cuenta {
+  justify-content: flex-start;
   position: fixed;
   top: 0;
   right: 0;
   width: 300px;
   height: 100%;
-  background: #1e3a8aee;
+  background: linear-gradient(0deg, #213774e3, #288a4cde);
   color: white;
   box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
   padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   animation: slideIn 0.3s ease forwards;
   z-index: 1000;
 }
@@ -431,7 +429,6 @@ body {
 }
 
 .panel-body {
-  margin-top: 20px;
   font-size: 16px;
   display: flex;
   flex-direction: column;
@@ -1012,6 +1009,6 @@ input[type="email"] {
   margin-right: 300px;
 }
 
-.newsletter p{
-  color:#1e3a8a;
+.newsletter p {
+  color: #1e3a8a;
 }
