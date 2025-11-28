@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
 import axios from 'axios'
 import '../Layouts.css'
 
@@ -48,15 +49,33 @@ function Inicio() {
   // 🔹 Función para suscribirse
   const suscribirse = async (e) => {
     e.preventDefault()
-    if (!email) return setMensaje('Ingresa un correo válido.')
+
+    if (!email) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Correo inválido',
+        text: 'Por favor ingresa un correo válido.',
+      })
+      return
+    }
 
     try {
       const res = await axios.post('http://localhost:3000/server/suscribir', { email })
-      setMensaje(res.data.message || 'Suscripción exitosa ✅')
+      Swal.fire({
+        icon: 'success',
+        title: 'Suscripción exitosa',
+        text: res.data.message || '¡Te has suscrito correctamente!',
+        timer: 2000,
+        showConfirmButton: false,
+      })
       setEmail('')
     } catch (error) {
       console.error(error)
-      setMensaje(error.response?.data?.message || 'Error al suscribirse ❌')
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error.response?.data?.message || 'Email ya suscrito.',
+      })
     }
   }
 
@@ -98,7 +117,7 @@ function Inicio() {
           {productos.map((p) => (
             <div className="card-producto" key={p.ID}>
               <Link to={`/producto/${p.ID}`} className="link-producto">
-                <img src={obtenerImagen(p.Imagen)} alt={p.Model} className="img-producto"/>
+                <img src={obtenerImagen(p.Imagen)} alt={p.Model} className="img-producto" />
                 <h3>{p.Brand} {p.Model}</h3>
               </Link>
               <p className="descripcion">{p.Description}</p>

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import '../Layouts.css'
+import { VscAccount } from "react-icons/vsc";
+import { MdOutlineShoppingCart } from "react-icons/md";
 import Letra from './img/fixcel.png'
 import Eng from './img/fixx.png'
 import Registrar from '../Pages/Registrar.jsx'
@@ -11,6 +13,7 @@ import Inicio from '../Pages/Inicio.jsx'
 import AgregarProducto from '../Pages/AgregarProducto.jsx'
 import ProductoDetalle from '../Pages/ProductoDetalle.jsx'
 import Carrito from '../Pages/Carrito.jsx'
+import Comprar from '../Pages/Comprar.jsx'
 
 function Encabezado() {
   const [usuario, setUsuario] = useState(null)
@@ -61,28 +64,40 @@ function Encabezado() {
             </>
           ) : (
             <>
+              <Link to="/carrito" className='btn-cuenta'>
+                <MdOutlineShoppingCart />
+              </Link>
               <button
                 className="btn-cuenta"
                 onClick={() => setMostrarCuenta(!mostrarCuenta)}
               >
-                Tu cuenta
+                <VscAccount />
               </button>
             </>
           )}
         </nav>
       </header>
 
-      {/* Panel lateral */}
       {mostrarCuenta && (
         <div className="panel-cuenta">
           <div className="panel-header">
             <h2>Tu cuenta</h2>
             <button className="cerrar-panel" onClick={() => setMostrarCuenta(false)}>×</button>
           </div>
+
           <div className="panel-body">
-            <p><strong>Usuario:</strong> {usuario?.user}</p>
-            <p><strong>Nombre:</strong> {usuario?.nombre}</p>
-            <p><strong>Email:</strong> {usuario?.email}</p>
+            <div className="info-item">
+              <strong>Usuario:</strong> <span>{usuario?.user}</span>
+            </div>
+
+            <div className="info-item">
+              <strong>Nombre:</strong> <span>{usuario?.nombre}</span>
+            </div>
+
+            <div className="info-item">
+              <strong>Email:</strong> <span>{usuario?.email}</span>
+            </div>
+
             <Link to="/carrito">
               <button className="btn-verde">Ver carrito 🛒</button>
             </Link>
@@ -91,7 +106,6 @@ function Encabezado() {
           </div>
         </div>
       )}
-
       <Routes>
         <Route path="/main" element={<Inicio />} />
         <Route path="/registro" element={<Registrar />} />
@@ -101,6 +115,7 @@ function Encabezado() {
         <Route path="/regipro" element={<AgregarProducto />} />
         <Route path="/producto/:id" element={<ProductoDetalle />} />
         <Route path="/carrito" element={<Carrito />} />
+        <Route path="/compra" element={<Comprar />} />
       </Routes>
     </Router>
   )

@@ -22,7 +22,8 @@ const db = new SQLite.Database(db_Ubicacion, (Error) => {
            Password TEXT,
            Name TEXT,
            Email TEXT UNIQUE,
-           verificado BOOLEAN DEFAULT 0
+           EmailVerificado TEXT DEFAULT 'no',
+           TokenVerificacion TEXT
             )`, (Error) => {
             if (Error) {
                 console.log('No se pudo crear la Tabla USUARIOS ❗');

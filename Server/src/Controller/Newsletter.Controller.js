@@ -22,12 +22,13 @@ const SuscribirNewsletter = async (req, res) => {
     }
 
     // Si se guardó bien, enviamos el correo de confirmación
-    const asunto = "🎉 ¡Gracias por suscribirte a Fixcell!";
+    const asunto = "🎉 ¡Gracias por suscribirte a Fixcel!";
     const cuerpo = `
       ¡Hola!<br><br>
-      Te damos la bienvenida a nuestro newsletter de <strong>Fixcell</strong> 💙.<br>
+      Te damos la bienvenida a nuestro newsletter de <strong>Fixcel</strong> 💙.<br>
       A partir de ahora vas a recibir novedades, descuentos y lanzamientos exclusivos.<br><br>
       Si no solicitaste esta suscripción, simplemente ignorá este correo.
+      <br>Segui a nuestra escuela en <a href="https://www.instagram.com/tecnica1mg?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">Instagram!</a> </br>
       <br><br>— El equipo de Fixcell ⚙️
     `;
 

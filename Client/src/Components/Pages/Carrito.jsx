@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom'
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import '../Layouts.css';
@@ -110,7 +111,7 @@ function Carrito() {
 
   return (
     <div className="carrito-container">
-      <h2>🛒 Tu Carrito</h2>
+      <h2 className='titulo'>Tu Carrito</h2>
 
       {carrito.length === 0 ? (
         <p>No tienes productos en tu carrito.</p>
@@ -139,19 +140,7 @@ function Carrito() {
           ))}
           <div className="carrito-total">
             <h3>Total: ${total}</h3>
-            <button
-              className="btn-verde"
-              onClick={() =>
-                Swal.fire({
-                  icon: 'success',
-                  title: 'Compra finalizada',
-                  text: 'Tu pedido fue registrado correctamente ✅',
-                  confirmButtonColor: '#1e3a8a'
-                })
-              }
-            >
-              Finalizar compra
-            </button>
+            <Link to="/compra" className="btn-comprar">Finalizar compra</Link>
           </div>
         </div>
       )}

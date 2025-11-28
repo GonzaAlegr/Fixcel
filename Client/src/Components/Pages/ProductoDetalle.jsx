@@ -101,13 +101,13 @@ function ProductoDetalle() {
             >
               Añadir al carrito
             </button>
-            <button className="btn-comprar">Comprar ahora</button>
+            <Link to="/compra" className="btn-comprar">Comprar ahora</Link>
           </div>
         </div>
       </div>
 
       <section className="recomendados">
-        <h3 className="titulo-recomendados">Productos recomendados</h3>
+        <h3 className="titulo">Productos recomendados</h3>
         <div className="lista-recomendados">
           {recomendados.map(r => (
             <Link to={`/producto/${r.ID}`} key={r.ID} className="card-recomendado">
