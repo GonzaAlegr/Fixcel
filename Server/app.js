@@ -1,38 +1,56 @@
+require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
 const sqlite3 = require('sqlite3').verbose();
+const session = require("express-session");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
-// Middlewares
+// DEBUG: verificar que el JWT_SECRET cargó bien
+console.log("JWT_SECRET CARGADO:", process.env.JWT_SECRET);
+
+// MIDDLEWARES
+app.use(session({
+  secret: "fixcel-secret",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: false,
+    httpOnly: true,
+    sameSite: "lax"
+  }
+}));
+
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true
+}));
 
-// Routers principales
+// Routers
 const loginRouter = require('./src/Router/Login.Router.js');
 app.use('/server', loginRouter);
 
 const CarritoRutas = require('./src/Router/Carrito.Router.js');
-app.use('/server', CarritoRutas);
+app.use('/carrito', CarritoRutas);
 
 const NewsletterRouter = require('./src/Router/Newsletter.Router.js');
-app.use('/server', NewsletterRouter);
+app.use('/newsletter', NewsletterRouter); 
 
 const ReparacionesRouter = require('./src/Router/Reparaciones.Router.js');
-app.use('/server', ReparacionesRouter);
+app.use('/reparacion', ReparacionesRouter);
 
-// FuncionesProductos
+// Funciones de Productos
 const FuncionesProductosRouter = require('./src/Router/FuncionesProductos.Router');
-app.use('/api', FuncionesProductosRouter);
+app.use('/api/productos', FuncionesProductosRouter);
 
 // Emails personalizados
 const router = require('./src/Router/Enviar.Routes');
-app.use('/api', router);
+app.use('/api/email', router);
 
-// =====================================================
-// CONEXIÓN A LA BASE DE DATOS
-// =====================================================
+// Conexion a la base de datos
 const db = new sqlite3.Database('./src/Database/db.db', (err) => {
   if (err) {
     console.error('❌ Error al conectar con la base:', err.message);
@@ -41,68 +59,48 @@ const db = new sqlite3.Database('./src/Database/db.db', (err) => {
   }
 });
 
-// =====================================================
-// RUTAS DE PRODUCTOS (sí deben quedar en app.js)
-// =====================================================
+// Rutas de productos
 
-// Obtener todos los productos
-app.get('/server/Productos', (req, res) => {
+app.get('/api/productos/all', (req, res) => {
   const query = 'SELECT * FROM PRODUCTOS';
   db.all(query, [], (err, rows) => {
-    if (err) {
-      console.error(err);
-      res.status(500).json({ error: err.message });
-    } else {
-      res.json(rows);
-    }
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
   });
 });
 
-// Obtener un producto por ID
-app.get('/server/Productos/:id', (req, res) => {
+app.get('/api/productos/:id', (req, res) => {
   const { id } = req.params;
   const query = 'SELECT * FROM PRODUCTOS WHERE ID = ?';
 
   db.get(query, [id], (err, row) => {
-    if (err) {
-      console.error('❌ Error al obtener producto:', err.message);
-      return res.status(500).json({ error: 'Error al obtener producto' });
-    }
-    if (!row) {
-      return res.status(404).json({ error: 'Producto no encontrado' });
-    }
+    if (err) return res.status(500).json({ error: 'Error al obtener producto' });
+    if (!row) return res.status(404).json({ error: 'Producto no encontrado' });
+
     res.json(row);
   });
 });
 
-// Registrar un producto
-app.post('/server/RegistrarProducto', async (req, res) => {
+app.post('/api/productos/Registrar', async (req, res) => {
   try {
     const { Brand, Model, Description, Stock, Price, Imagen } = req.body;
-    console.log(req.body);
 
-    const query = `INSERT INTO PRODUCTOS 
+    const query = `
+      INSERT INTO PRODUCTOS 
       (Brand, Model, Description, Stock, Price, Imagen) 
-      VALUES (?, ?, ?, ?, ?, ?)`;
+      VALUES (?, ?, ?, ?, ?, ?)
+    `;
 
     db.run(query, [Brand, Model, Description, Stock, Price, Imagen], (err) => {
-      if (err) {
-        console.error('❌ Error al crear producto', err.message);
-        return res.status(500).json({ error: 'Error al registrar producto' });
-      }
+      if (err) return res.status(500).json({ error: 'Error al registrar producto' });
 
-      console.log('✅ Producto insertado correctamente');
       res.json({ mensaje: 'Producto registrado correctamente' });
     });
   } catch (error) {
-    console.error('Error en servidor:', error);
     res.status(500).json({ error: 'Error del servidor' });
   }
 });
 
-// =====================================================
-// SERVIDOR
-// =====================================================
 app.listen(PORT, () => {
   console.log(`🦖 Servidor corriendo en http://localhost:${PORT}`);
 });

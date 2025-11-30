@@ -148,7 +148,6 @@ body {
   width: 420px;
   margin: 80px auto;
   padding: 0 40px 40px;
-  /* top en 0 para que el título pueda "salir" hacia arriba */
   border-radius: 8px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   text-align: center;
@@ -187,7 +186,6 @@ body {
   color: #1e3a8a;
 }
 
-/* Inputs */
 .registro-form input[type="text"],
 .registro-form input[type="password"] {
   padding: 12px;
@@ -204,7 +202,6 @@ body {
   box-shadow: 0 0 6px rgba(30, 58, 138, 0.4);
 }
 
-/* Botón */
 .btn-registrar {
   margin-top: 10px;
   background: linear-gradient(90deg, #1e3a8a, #22c55e);
@@ -223,7 +220,6 @@ body {
   box-shadow: 0 0 12px rgba(30, 58, 138, 0.6);
 }
 
-/* Mensaje */
 .mensaje {
   margin-top: 15px;
   font-weight: 500;
@@ -233,14 +229,12 @@ body {
 .mensaje {
   margin-top: 15px;
   color: #22c55e;
-  /* verde éxito */
   font-weight: 600;
   text-align: center;
 }
 
 .mensaje.error {
   color: #ef4444;
-  /* rojo para error */
 }
 
 .sweetalert-icon-container {
@@ -253,7 +247,6 @@ body {
 .sweetalert-icon {
   font-size: 60px;
   color: #22c55e;
-  /* Verde éxito */
 }
 
 .body {
@@ -290,7 +283,6 @@ body {
   width: 100%;
   height: 200px;
   object-fit: cover;
-  /* mantiene proporciones sin deformar */
   border-radius: 10px;
 }
 
@@ -325,7 +317,6 @@ body {
   background-color: #fff;
 }
 
-/* Logo principal */
 .inicio-logo {
   display: flex;
   justify-content: center;
@@ -338,7 +329,6 @@ body {
   width: 120px;
 }
 
-/* Eslogan con degradado */
 .inicio-eslogan {
   font-size: 1.8rem;
   margin: 20px 0 40px;
@@ -350,7 +340,6 @@ body {
   padding: 20px;
 }
 
-/* Productos destacados */
 .productos-destacados {
   padding: 20px;
 }
@@ -387,7 +376,6 @@ body {
   display: flex;
 }
 
-/* Panel lateral de cuenta */
 .panel-cuenta {
   justify-content: flex-start;
   position: fixed;
@@ -510,16 +498,11 @@ body {
 
 .servicio-card img {
   width: 100%;
-  /* La imagen ocupa todo el ancho del contenedor */
   height: 100%;
-  /* Se adapta al alto del contenedor */
   object-fit: cover;
-  /* Recorta la imagen sin deformarla */
   border-radius: 12px;
-  /* (Opcional) bordes redondeados si querés */
   display: block;
   transition: 0.3s ease-in-out;
-  /* Elimina pequeños espacios bajo la imagen */
 }
 
 .servicio-card:hover {
@@ -621,10 +604,6 @@ body {
   color: white;
 }
 
-
-
-/* --- Productos recomendados --- */
-
 .recomendados {
   text-align: center;
 }
@@ -714,7 +693,6 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   gap: 40px;
-  /* 🔹 más distancia entre tarjetas */
   margin-top: 20px;
 }
 
@@ -730,9 +708,7 @@ body {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   padding: 18px;
   text-decoration: none;
-  /* 🔹 elimina subrayado */
   color: #1f2937;
-  /* texto gris oscuro legible */
 }
 
 .card-producto:hover {
@@ -819,16 +795,11 @@ body {
 .servicio-cardd img {
   display: flex;
   width: 100%;
-  /* La imagen ocupa todo el ancho del contenedor */
   height: 100%;
-  /* Se adapta al alto del contenedor */
   object-fit: cover;
-  /* Recorta la imagen sin deformarla */
   border-radius: 12px;
-  /* (Opcional) bordes redondeados si querés */
   display: block;
   transition: 0.3s ease-in-out;
-  /* Elimina pequeños espacios bajo la imagen */
   align-items: start;
 }
 
@@ -902,7 +873,6 @@ input[type="number"] {
   margin: 0 auto;
 }
 
-/* Columna izquierda (servicios) */
 .columna-servicios {
   display: flex;
   flex-direction: column;
@@ -910,7 +880,6 @@ input[type="number"] {
   width: 50%;
 }
 
-/* Reutiliza tus estilos de .servicio-cardd sin que se estiren */
 .servicio-cardd {
   width: 100%;
   height: 180px;
@@ -924,7 +893,6 @@ input[type="number"] {
   transform: translateY(-5px);
 }
 
-/* Formulario a la derecha */
 .formulario-reparacion {
   margin-top: 0px;
   margin-left: 300px;
@@ -1034,96 +1002,5 @@ input[type="email"] {
 
 .aparte{
   background-color: red;
-
-}
-
-@media (max-width: 768px) {
-
-    /* HEADER */
-    header {
-        flex-direction: column;
-        padding: 15px;
-        text-align: center;
-    }
-
-    .menu {
-        flex-direction: column;
-        gap: 10px;
-        height: auto;
-    }
-
-    /* GRIDS DE PRODUCTOS */
-    .grid-productos {
-        grid-template-columns: repeat(2, 1fr);
-        display: grid;
-        gap: 15px;
-        margin: 0 auto;
-    }
-
-    .card-producto {
-        width: 100%;
-        padding: 12px;
-    }
-
-    /* PRODUCTO DETALLE */
-    .detalle-principal {
-        flex-direction: column;
-        text-align: center;
-        gap: 20px;
-    }
-
-    .detalle-imagen {
-        width: 100%;
-        height: auto;
-        max-width: 100%;
-    }
-
-    /* SERVICIOS */
-    .grid-servicios,
-    .grid-servicioss {
-        flex-direction: column;
-        gap: 20px;
-        height: auto;
-        align-items: center;
-    }
-
-    .servicio-card,
-    .servicio-cardd {
-        width: 90%;
-        height: auto;
-        margin: 0 auto;
-    }
-
-    /* PANEL CUENTA */
-    .panel-cuenta {
-        width: 80%;
-    }
-
-    /* FORMULARIOS */
-    .registro-container {
-        width: 90%;
-        margin: 20px auto;
-    }
-
-    /* CAJAS GRANDES (newsletter, cajas de servicios, contenedores) */
-    .newsletter,
-    .cajaprincipal {
-        width: 95%;
-        margin-left: 0;
-        margin-right: 0;
-        flex-direction: column;
-    }
-
-    .formulario-reparacion {
-        margin-left: 0;
-        width: 100%;
-        flex-direction: column;
-    }
-
-    /* FOOTER */
-    .footer {
-        padding: 20px;
-        font-size: .9rem;
-    }
 
 }

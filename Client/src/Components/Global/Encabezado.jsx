@@ -14,6 +14,7 @@ import AgregarProducto from '../Pages/AgregarProducto.jsx'
 import ProductoDetalle from '../Pages/ProductoDetalle.jsx'
 import Carrito from '../Pages/Carrito.jsx'
 import Comprar from '../Pages/Comprar.jsx'
+import VerReparaciones from '../Pages/Reparacionver.jsx'
 
 function Encabezado() {
   const [usuario, setUsuario] = useState(null)
@@ -31,7 +32,6 @@ function Encabezado() {
     window.location.href = '/main'
   }
 
-  // Cierra el panel al hacer clic fuera
   useEffect(() => {
     const cerrarAlClickFuera = (e) => {
       const panel = document.querySelector('.panel-cuenta')
@@ -116,6 +116,7 @@ function Encabezado() {
         <Route path="/producto/:id" element={<ProductoDetalle />} />
         <Route path="/carrito" element={<Carrito />} />
         <Route path="/compra" element={<Comprar />} />
+        <Route path="/repaver" element={<VerReparaciones />} />
       </Routes>
     </Router>
   )

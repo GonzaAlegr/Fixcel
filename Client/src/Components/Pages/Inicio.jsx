@@ -18,18 +18,18 @@ import Servicio3 from '../Global/img/servicio3.jpg'
 function Inicio() {
   const [productos, setProductos] = useState([])
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [email, setEmail] = useState('') // 🔹 Estado para newsletter
-  const [mensaje, setMensaje] = useState('') // 🔹 Mensaje de éxito/error
+  const [email, setEmail] = useState('')
+  const [mensaje, setMensaje] = useState('') 
   const navigate = useNavigate()
 
-  // 🔹 Cargar productos destacados
+  // caga de productos destacados
   useEffect(() => {
-    axios.get('http://localhost:3000/server/Productos')
+    axios.get('http://localhost:3000/api/productos/all')
       .then(res => setProductos(res.data.slice(0, 4)))
       .catch(err => console.error('Error al obtener productos destacados:', err))
   }, [])
 
-  // 🔹 Carrusel automático
+  // carrusel
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % 3)
@@ -37,16 +37,13 @@ function Inicio() {
     return () => clearInterval(interval)
   }, [])
 
-  // 🔹 Banners
   const banners = [Banner1, Banner2, Banner3]
 
-  // 🔹 Función para obtener imagen
   const obtenerImagen = (nombre) => {
     const ruta = `../Global/img/${nombre}`
     return imagenes[ruta]?.default || imagenes['../Global/img/default.jpg']?.default
   }
 
-  // 🔹 Función para suscribirse
   const suscribirse = async (e) => {
     e.preventDefault()
 
@@ -60,7 +57,7 @@ function Inicio() {
     }
 
     try {
-      const res = await axios.post('http://localhost:3000/server/suscribir', { email })
+      const res = await axios.post('http://localhost:3000/newsletter/suscribir', { email })
       Swal.fire({
         icon: 'success',
         title: 'Suscripción exitosa',
@@ -81,14 +78,12 @@ function Inicio() {
 
   return (
     <div className="inicio-container">
-      {/* 🔹 Eslogan */}
       <div className='cajalogo'>
         <h2 className="inicio-eslogan">
           Innovamos para reparar tu mundo
         </h2>
       </div>
 
-      {/* 🔹 Carrusel */}
       <div className="carousel">
         {banners.map((img, index) => (
           <img
@@ -100,7 +95,6 @@ function Inicio() {
         ))}
       </div>
 
-      {/* 🔹 Servicios */}
       <section className="servicioss">
         <Link to="/servi" className='titulo'>Nuestros servicios</Link>
         <div className="grid-servicios">
@@ -110,7 +104,6 @@ function Inicio() {
         </div>
       </section>
 
-      {/* 🔹 Productos destacados */}
       <section className="productos-destacados">
         <Link to="/productos" className="titulo">Productos destacados</Link>
         <div className="grid-productos">
@@ -130,7 +123,6 @@ function Inicio() {
         </div>
       </section>
 
-      {/* 🔹 Newsletter */}
       <section className="newsletter">
         <h2 className="titulo">Suscríbete a nuestro Newsletter</h2>
         <form onSubmit={suscribirse} className="newsletter-form">

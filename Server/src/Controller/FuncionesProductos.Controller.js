@@ -1,6 +1,5 @@
 const db = require('../DataBase/db');
 
-// === Ver todos los productos ===
 const VerProductos = (req, res) => {
     const query = 'SELECT * FROM Productos';
     db.all(query, [], (err, rows) => {
@@ -13,7 +12,6 @@ const VerProductos = (req, res) => {
     });
 };
 
-// === Eliminar producto por ID ===
 const EliminarProducto = (req, res) => {
     const { id } = req.params;
 
@@ -36,7 +34,6 @@ const EliminarProducto = (req, res) => {
     });
 };
 
-// === Modificar producto por ID ===
 const ModificarProducto = (req, res) => {
     const { id } = req.params;
     const { Brand, Model, Description, Stock, Price, Imagen } = req.body;
@@ -45,7 +42,6 @@ const ModificarProducto = (req, res) => {
         return res.status(400).json({ Error: 'Debe completar todos los campos excepto Imagen (opcional)' });
     }
 
-    // Si Imagen no se envía, le ponemos un valor por defecto
     const imagenFinal = Imagen || 'default.jpg';
 
     const query = `
@@ -74,7 +70,6 @@ const ModificarProducto = (req, res) => {
     });
 };
 
-// === Registrar producto ===
 const RegistrarProducto = (req, res) => {
     const { Brand, Model, Description, Stock, Price, Imagen } = req.body;
 

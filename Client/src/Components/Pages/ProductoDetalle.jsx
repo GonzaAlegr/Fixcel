@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 import '../Layouts.css'
 
-// 🔹 Importa todas las imágenes de forma segura
 const imagenes = import.meta.glob('../Global/img/*', { eager: true })
 
 function ProductoDetalle() {
@@ -13,13 +12,11 @@ function ProductoDetalle() {
   const [recomendados, setRecomendados] = useState([])
 
   useEffect(() => {
-    // Cargar producto seleccionado
-    axios.get(`http://localhost:3000/server/Productos/${id}`)
+    axios.get(`http://localhost:3000/api/productos/${id}`)
       .then(res => setProducto(res.data))
       .catch(err => console.error('Error al cargar producto:', err))
 
-    // Cargar productos recomendados
-    axios.get('http://localhost:3000/server/Productos')
+    axios.get('http://localhost:3000/api/productos/all')
       .then(res => {
         const productosFiltrados = res.data.filter(p => p.ID !== parseInt(id))
         const seleccion = productosFiltrados.sort(() => 0.5 - Math.random()).slice(0, 4)
@@ -65,7 +62,6 @@ function ProductoDetalle() {
     }
   }
 
-  // 🔹 Función para obtener imagen o usar una por defecto
   const obtenerImagen = (nombre) => {
     const ruta = `../Global/img/${nombre}`
     if (imagenes[ruta]) {

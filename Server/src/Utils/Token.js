@@ -1,17 +1,19 @@
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
-// Genera token válido 24 hs
-function generarToken(email) {
-  return jwt.sign(
-    { email },
-    process.env.JWT_SECRET || "clave_secreta_segura",
-    { expiresIn: "24h" }
-  )
+function GenerarToken(email) {
+    return jwt.sign(
+        { Email: email },                       
+        process.env.JWT_SECRET,               
+        { expiresIn: "1d" }                      
+    )
 }
 
-function verificarToken(token) {
-  return jwt.verify(token, process.env.JWT_SECRET || "clave_secreta_segura")
+function VerificarToken(token) {
+    return jwt.verify(
+        token,
+        process.env.JWT_SECRET
+    )
 }
 
-module.exports = { generarToken, verificarToken }
+module.exports = { GenerarToken, VerificarToken }

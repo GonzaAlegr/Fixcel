@@ -26,7 +26,6 @@ function AgregarProducto() {
     }
 
     try {
-      // 🔹 Solo tomamos el nombre del archivo
       const ImagenNombre = Imagen.name
 
       const productoData = {
@@ -39,7 +38,7 @@ function AgregarProducto() {
       }
 
       const ServidorBack = await axios.post(
-        'http://localhost:3000/server/RegistrarProducto',
+        'http://localhost:3000/api/productos/registrar',
         productoData
       )
 
@@ -50,7 +49,6 @@ function AgregarProducto() {
         confirmButtonColor: '#3085d6',
       })
 
-      // 🔹 Limpiar formulario
       setBrand('')
       setModel('')
       setDescription('')

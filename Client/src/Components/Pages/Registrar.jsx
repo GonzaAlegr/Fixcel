@@ -40,7 +40,7 @@ function Registrar() {
         text: ServidorBack.data.mensaje || 'Usuario creado correctamente.',
         confirmButtonColor: '#3085d6',
       }).then(() => {
-        navigate('/inicio') // redirige a inicio de sesión
+        navigate('/inicio')
       })
 
       setUser('')

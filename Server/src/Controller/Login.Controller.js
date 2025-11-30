@@ -1,140 +1,138 @@
-const db = require('../Database/db');
-const { PasswordEncriptar, CompararPassword } = require('../Utils/hash');
-const { generarToken, verificarToken } = require('../Utils/Token');
+const SQLite = require('sqlite3')
+const path = require('path')
+const bcrypt = require('bcryptjs')
 const { enviarCorreo } = require('../Utils/Email');
+const nodemailer = require('nodemailer')
+require('dotenv').config()
 
-console.log("✅ Login.Controller cargado correctamente");
+const { GenerarToken, VerificarToken } = require('../Utils/token')
 
-// ============================================================
-// REGISTRO — DEBUG COMPLETO
-// ============================================================
+const db = new SQLite.Database(
+    path.resolve(__dirname, '../Database/db.db'),
+    SQLite.OPEN_READWRITE,
+    (err) => {
+        if (err) console.log('❌ Error al conectar DB:', err)
+    }
+)
+
 const LoginRegister = async (req, res) => {
-  try {
-    console.log("📩 Datos recibidos en /RegistrarUsuario:", req.body);
+    const { DNI, User, Password, Name, Email } = req.body;
 
-    const { User, Password, Name, DNI, Email } = req.body;
-
-    if (!User || !Password || !Name || !DNI || !Email) {
-      console.log("⚠ Campos incompletos");
-      return res.status(400).json({ Error: "Debe completar todos los campos." });
+    if (!DNI || !User || !Password || !Name || !Email) {
+        return res.status(400).json({ exito: false, mensaje: 'Faltan datos.' });
     }
 
-    const queryCheck = "SELECT * FROM Usuarios WHERE User = ? OR DNI = ? OR Email = ?";
-    console.log("🔍 Verificando si el usuario ya existe...");
+    const hashedPass = bcrypt.hashSync(Password, 10);
+    const token = GenerarToken(Email);
 
-    db.get(queryCheck, [User, DNI, Email], async (error, existing) => {
-      if (error) {
-        console.log("❌ Error SELECT:", error);
-        return res.status(500).json({ Error: "Error en la base de datos." });
-      }
-
-      if (existing) {
-        console.log("⚠ Usuario ya existe:", existing);
-        if (existing.User === User) return res.status(400).json({ Error: "El usuario ya está registrado." });
-        if (existing.DNI === DNI) return res.status(400).json({ Error: "El DNI ya está registrado." });
-        if (existing.Email === Email) return res.status(400).json({ Error: "El correo electrónico ya está registrado." });
-      }
-
-      console.log("🔐 Encriptando contraseña...");
-      const hash = await PasswordEncriptar(Password);
-
-      console.log("🔑 Generando token...");
-      const token = generarToken(Email);
-
-      console.log("📥 Insertando usuario en la base...");
-
-      const insertQuery = `
-        INSERT INTO Usuarios 
-        (DNI, User, Password, Name, Email, EmailVerificado, TokenVerificacion)
+    const sql = `
+        INSERT INTO Usuarios (DNI, User, Password, Name, Email, EmailVerificado, TokenVerificacion)
         VALUES (?, ?, ?, ?, ?, 0, ?)
-      `;
+    `;
 
-      db.run(insertQuery, [DNI, User, hash, Name, Email, token], async function (err) {
+    db.run(sql, [DNI, User, hashedPass, Name, Email, token], async (err) => {
         if (err) {
-          console.log("❌ ERROR INSERT:", err);
-          return res.status(500).json({ Error: "Error al registrar usuario." });
+            return res.status(400).json({ exito: false, mensaje: 'Error al registrar usuario.' });
         }
 
-        const url = `http://localhost:3000/server/verificar/${token}`;
-        console.log("📨 Enviando correo a:", Email);
+        const link = `http://localhost:3000/server/verificar/${token}`;
+        const asunto = "Verifica tu cuenta en Fixcel";
+        const cuerpo = `
+            ¡Hola ${Name}!<br><br>
+            Gracias por registrarte en Fixcel.<br>
+            Haz clic en el siguiente botón para verificar tu cuenta y poder iniciar sesión:<br><br>
+            <a href="${link}" style="
+                display:inline-block;
+                padding:10px 20px;
+                background:#4CAF50;
+                color:white;
+                border-radius:6px;
+                text-decoration:none;
+            ">Verificar cuenta</a><br><br>
+            Si no solicitaste esta cuenta, simplemente ignora este correo.
+        `;
 
-        try {
-          await enviarCorreo(
-            Email,
-            "Verifica tu correo electrónico",
-            `
-              Hola ${Name},<br><br>
-              Gracias por registrarte en Fixcell.<br>
-              Haz clic aquí para activar tu cuenta:<br><br>
-              <a href="${url}">Verificar cuenta</a>
-            `
-          );
-        } catch (mailError) {
-          console.log("❌ ERROR AL ENVIAR CORREO:", mailError);
-          return res.status(500).json({ Error: "Usuario creado pero fallo el envío de correo." });
-        }
+        await enviarCorreo(Email, asunto, cuerpo);
 
-        console.log("✅ Registro completado con éxito");
-        res.status(201).json({ mensaje: "Registrado. Verifica tu correo." });
-      });
+        res.json({ exito: true, mensaje: 'Usuario registrado. Revisa tu correo para verificar.' });
     });
-
-  } catch (err) {
-    console.log("🔥 ERROR GENERAL:", err);
-    res.status(500).json({ Error: "Error en el servidor." });
-  }
 };
 
-// ============================================================
-// LOGIN
-// ============================================================
 const LoginUser = (req, res) => {
-  const { User, Password } = req.body;
+    const { User, Password } = req.body
 
-  db.get("SELECT * FROM Usuarios WHERE User = ?", [User], async (err, row) => {
-    if (err) return res.status(500).json({ mensaje: "Error en la base de datos." });
-    if (!row) return res.json({ exito: false, mensaje: "Usuario no encontrado." });
-
-    if (row.EmailVerificado === 0) {
-      return res.json({
-        exito: false,
-        mensaje: "Debes verificar tu correo antes de iniciar sesión.",
-      });
+    if (!User || !Password) {
+        return res.status(400).json({ exito: false, mensaje: 'Faltan datos.' })
     }
 
-    const passwordValida = await CompararPassword(Password, row.Password);
-    if (!passwordValida) return res.json({ exito: false, mensaje: "Contraseña incorrecta." });
+    const sql = `SELECT * FROM Usuarios WHERE User = ?`
 
-    res.json({
-      exito: true,
-      mensaje: `Bienvenido, ${row.Name}`,
-      usuario: row,
-    });
-  });
-};
+    db.get(sql, [User], (err, row) => {
+        if (err) return res.status(500).json({ exito: false, mensaje: 'Error en el servidor.' })
 
-// ============================================================
-// VERIFICAR TOKEN
-// ============================================================
+        if (!row) return res.status(400).json({ exito: false, mensaje: 'Usuario no existe.' })
+
+        const validPass = bcrypt.compareSync(Password, row.Password)
+        if (!validPass) return res.status(400).json({ exito: false, mensaje: 'Contraseña incorrecta.' })
+
+        if (Number(row.EmailVerificado) !== 1) {
+            return res.status(401).json({
+                exito: false,
+                mensaje: 'Debes verificar tu correo antes de iniciar sesión.'
+            })
+        }
+
+        const token = GenerarToken(row.Email)
+
+        const usuario = {
+            user: row.User,
+            nombre: row.Name,
+            email: row.Email
+        }
+
+        return res.json({
+            exito: true,
+            mensaje: 'Login exitoso',
+            token,
+            usuario
+        })
+    })
+}
+
 const VerificarCuenta = (req, res) => {
-  const { token } = req.params;
+    const { token } = req.params
 
-  try {
-    const decoded = verificarToken(token);
+    let decoded
+    try {
+        decoded = VerificarToken(token)
+    } catch (error) {
+        return res.send('Token inválido o expirado.')
+    }
 
-    db.run(
-      `UPDATE Usuarios 
-       SET EmailVerificado = 1, TokenVerificacion = NULL
-       WHERE Email = ?`,
-      [decoded.email],
-      (err) => {
-        if (err) return res.status(500).send("Error al verificar cuenta.");
-        res.send("Cuenta verificada correctamente ✔");
-      }
-    );
-  } catch (err) {
-    return res.status(400).send("Token inválido o expirado ❌");
-  }
-};
+    const sql = `
+        UPDATE Usuarios
+        SET EmailVerificado = 1
+        WHERE Email = ?
+    `
 
-module.exports = { LoginRegister, LoginUser, VerificarCuenta };
+    db.run(sql, [decoded.Email], (error) => {
+        if (error) return res.send('Error al verificar cuenta.')
+
+        res.send(`
+            <h1>Cuenta verificada con éxito</h1>
+            <a 
+                href="http://localhost:5173/inicio"
+                style="padding: 10px 15px; background: #4CAF50; color:white; border-radius: 5px; text-decoration:none;">
+                Iniciar Sesión
+            </a>
+        `)
+    })
+}
+
+
+
+module.exports = {
+    LoginRegister,
+    LoginUser,
+    VerificarCuenta
+}

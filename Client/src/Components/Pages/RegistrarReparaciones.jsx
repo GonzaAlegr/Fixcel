@@ -25,15 +25,14 @@ function RegistrarReparaciones() {
 
         try {
             const reparacionData = {
-                DNI,       // coincide con lo que espera tu controlador (si usa `const { DNI, ... }`)
+                DNI,    
                 User,
                 Model,
                 Description,
             }
 
-            // 🔁 Usamos '/server/reparaciones/registrar' para ser equivalente a tu/RegistrarProducto
             const ServidorBack = await axios.post(
-                'http://localhost:3000/server/reparaciones/registrar',
+                'http://localhost:3000/reparacion/reparaciones/registrar',
                 reparacionData
             )
 
@@ -44,19 +43,17 @@ function RegistrarReparaciones() {
                 confirmButtonColor: '#3085d6',
             })
 
-            // limpiar formulario
             setDNI('')
             setUser('')
             setModel('')
             setDescription('')
         } catch (Error) {
-            // Mostrar info útil para debug
+
             console.error('❌ Error al registrar reparación:', Error.response?.data || Error.message)
 
             Swal.fire({
                 icon: 'error',
                 title: 'Error al guardar',
-                // si el backend devolvió { Error: '...' } lo mostramos; si no, mostramos message general
                 text: Error.response?.data?.Error || Error.response?.data?.mensaje || Error.message,
                 confirmButtonColor: '#d33',
             })
@@ -99,7 +96,7 @@ function RegistrarReparaciones() {
                     placeholder="Describe el inconveniente"
                 />
 
-                <Link to="/reparaciones">Ver reparaciones</Link>
+                <Link to="/repaver">Ver reparaciones</Link>
                 <input
                     className="btn-registrar"
                     type="submit"

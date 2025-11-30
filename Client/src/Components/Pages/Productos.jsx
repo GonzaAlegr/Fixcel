@@ -10,7 +10,7 @@ function Productos() {
   const [productos, setProductos] = useState([])
 
   useEffect(() => {
-    axios.get('http://localhost:3000/server/Productos')
+    axios.get('http://localhost:3000/api/productos/all')
       .then(res => setProductos(res.data))
       .catch(() => {
         Swal.fire({
@@ -30,7 +30,6 @@ function Productos() {
     }
   }
 
-  // 🛒 Agregar al carrito con SweetAlert
   const agregarAlCarrito = async (productoID, e) => {
     e.preventDefault()
     const usuario = JSON.parse(localStorage.getItem('usuario'))
@@ -46,7 +45,7 @@ function Productos() {
     }
 
     try {
-      const res = await axios.post('http://localhost:3000/server/AgregarAlCarrito', {
+      const res = await axios.post('http://localhost:3000/carrito/AgregarAlCarrito', {
         user: usuario.user,
         productoID,
         cantidad: 1

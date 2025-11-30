@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt'); // CommonJS, si usas import: import bcrypt from 'bcrypt';
+const bcrypt = require('bcrypt'); 
 
 const SALT_ROUNDS = 10;
 

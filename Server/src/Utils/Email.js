@@ -1,40 +1,32 @@
-// 📧 utils/enviarCorreo.js
 const nodemailer = require('nodemailer');
 const  path =require('path');
 require('dotenv').config();
 /**
- * Envía un correo electrónico utilizando el transporter configurado.
- * @param {string} destinatario - Dirección de correo del receptor.
- * @param {string} asunto - Asunto del correo.
- * @param {string} cuerpo - Contenido del mensaje.
+ * @param {string} destinatario 
+ * @param {string} asunto 
+ * @param {string} cuerpo 
  * @returns {Promise<{ success: boolean, messageId?: string, error?: any }>}
  */
 async function enviarCorreo(destinatario, asunto, cuerpo) {
   try {
-    // --- Configuración del transporter ---
+
     const transporter = nodemailer.createTransport({
-      service: 'gmail', // o el servicio que uses (Outlook, SMTP personalizado, etc.)
+      service: 'gmail', 
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
       },
     });
 
-    // --- Configuración del correo ---
     const mailOptions = {
-      // Remitente del correo (nombre visible + dirección de correo configurada en las variables de entorno)
       from: `Fixcel" <${process.env.EMAIL_USER}>`,
 
-      // Dirección de correo del destinatario (se puede pasar como parámetro)
       to: destinatario,
 
-      // Asunto del correo
       subject: asunto,
 
-      // Texto plano alternativo (por si el cliente de correo no soporta HTML)
       text: cuerpo,
 
-      // Contenido en formato HTML — estructura visual del correo
       html: `
   <div style="font-family: Arial, sans-serif; color: #333; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
     
@@ -70,22 +62,17 @@ async function enviarCorreo(destinatario, asunto, cuerpo) {
   </div>
   `,
 
-      // Archivos adjuntos del correo (en este caso, el logo institucional)
       attachments: [
         {
-          // Nombre del archivo que se enviará
           filename: 'fixcellogo.png',
 
-          // Ruta del archivo en tu proyecto (asegurate de que exista en esa ubicación)
           path: path.resolve(__dirname, '../img/fixcellogo.png'),
 
-          // CID = Content ID, permite incrustar el logo dentro del HTML (en lugar de adjuntarlo aparte)
           cid: 'logoEmpresa'
         }
       ]
     };
 
-    // --- Envío del correo ---
     const info = await transporter.sendMail(mailOptions);
     console.log(`✅ Correo enviado correctamente a ${destinatario} (ID: ${info.messageId})`);
 

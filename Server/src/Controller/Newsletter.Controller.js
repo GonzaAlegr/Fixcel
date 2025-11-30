@@ -1,9 +1,6 @@
 const db = require('../DataBase/db')
 const { enviarCorreo } = require('../Utils/Email');
 
-/**
- * Controlador para registrar un nuevo suscriptor y enviarle un correo de confirmación.
- */
 const SuscribirNewsletter = async (req, res) => {
   const { email } = req.body;
 
@@ -11,7 +8,6 @@ const SuscribirNewsletter = async (req, res) => {
     return res.status(400).json({ error: "Debes ingresar un correo electrónico." });
   }
 
-  // Intentar guardar el correo
   db.run(`INSERT INTO Newsletter (Email) VALUES (?)`, [email], async (err) => {
     if (err) {
       if (err.message.includes("UNIQUE")) {
@@ -21,7 +17,6 @@ const SuscribirNewsletter = async (req, res) => {
       return res.status(500).json({ error: "Error al registrar suscripción." });
     }
 
-    // Si se guardó bien, enviamos el correo de confirmación
     const asunto = "🎉 ¡Gracias por suscribirte a Fixcel!";
     const cuerpo = `
       ¡Hola!<br><br>

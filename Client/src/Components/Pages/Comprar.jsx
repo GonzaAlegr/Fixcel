@@ -1,13 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import '../Layouts.css' // tu css global (lo usaste antes)
-
-/*
-  Comprar.jsx
-  - Lee "cart" y "checkoutInfo" desde localStorage si existen.
-  - Simula procesamiento corto y luego muestra la confirmación con número de orden.
-  - No hace requests ni integra pagos reales.
-*/
+import '../Layouts.css' 
 
 function formatCurrency(n) {
   return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(n)
@@ -27,14 +20,12 @@ function Comprar() {
   })
 
   useEffect(() => {
-    // Cargar datos del localStorage si están (nombre de keys ilustrativas)
     try {
       const storedCart = JSON.parse(localStorage.getItem('cart') || 'null')
       const storedInfo = JSON.parse(localStorage.getItem('checkoutInfo') || 'null')
       if (storedCart && Array.isArray(storedCart) && storedCart.length) {
         setCart(storedCart)
       } else {
-        // ejemplo por defecto para que la página se vea real
         setCart([
           { id: 1, title: 'Iphone', qty: 1, price: 12999 },
           { id: 2, title: 'Samsung', qty: 1, price: 8999 }
@@ -49,22 +40,19 @@ function Comprar() {
       console.warn('Error leyendo localStorage, usando valores por defecto')
     }
 
-    // Simula "procesando" por 1.5 - 2.5s
     const t = setTimeout(() => {
-      // generar número de orden (aleatorio)
       const now = Date.now().toString().slice(-6)
       const random = Math.floor(Math.random() * 900) + 100
       setOrderNumber(`ORD-${now}-${random}`)
       setLoading(false)
-      // opcional: limpiar carrito local (comentá si no querés borrar)
-      // localStorage.removeItem('cart')
+
     }, 1700)
 
     return () => clearTimeout(t)
   }, [])
 
   const subtotal = cart.reduce((s, it) => s + it.price * (it.qty || 1), 0)
-  const shipping = subtotal > 20000 ? 0 : 1499 // ejemplo de lógica
+  const shipping = subtotal > 20000 ? 0 : 1499 
   const total = subtotal + shipping
 
   if (loading) {

@@ -1,6 +1,5 @@
 const db = require('../DataBase/db');
 
-// 🛒 Agregar producto al carrito
 const AgregarAlCarrito = (req, res) => {
     const { user, productoID, cantidad } = req.body;
 
@@ -42,7 +41,6 @@ const AgregarAlCarrito = (req, res) => {
     });
 };
 
-// 🧾 Obtener el carrito de un usuario
 const ObtenerCarrito = (req, res) => {
     const { user } = req.params;
 
@@ -64,7 +62,6 @@ const ObtenerCarrito = (req, res) => {
     );
 };
 
-// ❌ Eliminar producto del carrito
 const EliminarDelCarrito = (req, res) => {
     const { id } = req.params;
     db.run(`DELETE FROM Carrito WHERE ID = ?`, [id], (err) => {

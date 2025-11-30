@@ -1,6 +1,5 @@
 const db = require('../DataBase/db');
 
-// Registrar producto
 const RegistrarProducto = (req, res) => {
     const { Brand, Model, Description, Stock, Price, Imagen } = req.body;
 

@@ -1,17 +1,14 @@
 const db = require('../DataBase/db');
 
-// Registrar reparación
 const RegistrarReparacion = (req, res) => {
     const { DNI, User, Model, Description } = req.body;
 
-    // Verificar campos vacíos
     if (!DNI || !User || !Model || !Description) {
         console.error('Campos vacíos ❗');
         return res.status(400).json({ Error: 'Debe completar todos los campos' });
     }
 
-    // Verificar que el usuario exista en la tabla Usuarios
-    const queryUsuario = 'SELECT * FROM Usuarios WHERE Dni = ? AND User = ?';
+    const queryUsuario = 'SELECT * FROM Usuarios WHERE DNI = ? AND User = ?';
     db.get(queryUsuario, [DNI, User], (Error, Usuario) => {
         if (Error) {
             console.error('Error en la consulta de usuario ❗', Error);
@@ -23,8 +20,7 @@ const RegistrarReparacion = (req, res) => {
             return res.status(404).json({ Error: 'El usuario no existe en la base de datos' });
         }
 
-        // Verificar si ya hay una reparación con el mismo modelo y usuario (opcional)
-        const queryCheck = 'SELECT * FROM Reparaciones WHERE Dni = ? AND Model = ?';
+        const queryCheck = 'SELECT * FROM Reparaciones WHERE DNI = ? AND Model = ?';
         db.get(queryCheck, [DNI, Model], (Error, Reparacion) => {
             if (Error) {
                 console.error('Error en la consulta de reparación ❗', Error);
@@ -33,10 +29,11 @@ const RegistrarReparacion = (req, res) => {
 
             if (Reparacion) {
                 console.error('Reparación duplicada ❗');
-                return res.status(400).json({ Error: 'Ya existe una reparación registrada para este modelo' });
+                return res.status(400).json({
+                    Error: 'Ya existe una reparación registrada para este modelo'
+                });
             }
 
-            // Insertar nueva reparación
             const queryInsert = `
                 INSERT INTO Reparaciones (DNI, User, Model, Description)
                 VALUES (?, ?, ?, ?)
@@ -59,4 +56,23 @@ const RegistrarReparacion = (req, res) => {
     });
 };
 
-module.exports = { RegistrarReparacion };
+const ObtenerReparaciones = (req, res) => {
+    const query = 'SELECT * FROM Reparaciones';
+
+    db.all(query, [], (Error, filas) => {
+        if (Error) {
+            console.error('❌ Error al obtener reparaciones:', Error);
+            return res.status(500).json({
+                Error: 'Error al obtener las reparaciones'
+            });
+        }
+
+        res.status(200).json(filas);
+    });
+};
+
+
+module.exports = {
+    RegistrarReparacion,
+    ObtenerReparaciones
+};

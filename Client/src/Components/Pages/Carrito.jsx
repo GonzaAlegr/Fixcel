@@ -11,7 +11,6 @@ function Carrito() {
   const [carrito, setCarrito] = useState([]);
   const [cargando, setCargando] = useState(true);
 
-  // Obtener usuario desde localStorage
   const usuarioGuardado = JSON.parse(localStorage.getItem("usuario"));
   const user = usuarioGuardado ? usuarioGuardado.user : null;
 
@@ -24,14 +23,13 @@ function Carrito() {
     }
   }
 
-  // Cargar carrito desde el servidor
   useEffect(() => {
     if (!user) {
       setCargando(false);
       return;
     }
 
-    axios.get(`http://localhost:3000/server/Carrito/${user}`)
+    axios.get(`http://localhost:3000/carrito/Carrito/${user}`)
       .then(res => {
         setCarrito(res.data);
         setCargando(false);
@@ -47,7 +45,6 @@ function Carrito() {
       });
   }, [user]);
 
-  // Eliminar producto del carrito
   const eliminarDelCarrito = (id) => {
     Swal.fire({
       title: '¿Eliminar producto?',
@@ -60,7 +57,7 @@ function Carrito() {
       cancelButtonColor: '#3085d6'
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:3000/server/EliminarDelCarrito/${id}`)
+        axios.delete(`http://localhost:3000/carrito/EliminarDelCarrito/${id}`)
           .then(res => {
             setCarrito(prev => prev.filter(item => item.ID !== id));
             Swal.fire({
@@ -82,10 +79,8 @@ function Carrito() {
     });
   };
 
-  // Mostrar total
   const total = carrito.reduce((acc, item) => acc + item.Price * item.Cantidad, 0);
 
-  // Renderizado
   if (cargando) {
     return (
       <div className="carrito-container">

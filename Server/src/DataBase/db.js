@@ -99,7 +99,7 @@ const db = new SQLite.Database(db_Ubicacion, (Error) => {
             }
         });
 
-        // 🆕 Tabla Newsletter
+        //  Tabla Newsletter
         db.run(`
             CREATE TABLE IF NOT EXISTS Newsletter (
                 ID INTEGER PRIMARY KEY AUTOINCREMENT,

@@ -1,5 +1,4 @@
 const { enviarCorreo } = require('../Utils/Email')
-// ---> Importamos la Base de datos
 const db = require('../DataBase/db')
 
 const EnviarCorreo = async (req, res) => {
@@ -12,7 +11,6 @@ const EnviarCorreo = async (req, res) => {
         
     }
    
-    // --------------> Email : Tabla de la Base de Datos
     query = 'INSERT INTO Email(Email,Asunto,Cuerpo)VALUES(?,?,?)'  
     
     db.run(query, [Email, Asunto, Cuerpo], async (Error) => {
@@ -22,7 +20,6 @@ const EnviarCorreo = async (req, res) => {
             
         }
 
-        // ----> function enviarCorreo(destinatario, asunto, cuerpo) ---> se encuentra en UTILS
             const Correo = await enviarCorreo(Email, Asunto, Cuerpo)
             if (!Correo.success) 
                 {

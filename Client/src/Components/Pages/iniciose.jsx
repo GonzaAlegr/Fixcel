@@ -22,10 +22,11 @@ function Iniciose() {
     }
 
     try {
-      const ServidorBack = await axios.post('http://localhost:3000/server/IniciarSesion', {
-        User,
-        Password,
-      })
+      const ServidorBack = await axios.post(
+        'http://localhost:3000/server/IniciarSesion',
+        { User, Password },
+        { withCredentials: true } 
+      )
 
       if (ServidorBack.data.exito) {
         localStorage.setItem('usuario', JSON.stringify(ServidorBack.data.usuario))
@@ -37,7 +38,7 @@ function Iniciose() {
           confirmButtonColor: '#3085d6',
         }).then(() => {
           navigate('/main')
-          window.location.reload() // 🔁 refresca la página después de redirigir
+          window.location.reload()
         })
       } else {
         Swal.fire({
@@ -49,6 +50,16 @@ function Iniciose() {
       }
     } catch (error) {
       console.log(error)
+
+      if (error.response && error.response.status === 401) {
+        return Swal.fire({
+          icon: 'warning',
+          title: 'Cuenta no verificada',
+          text: error.response.data.mensaje || 'Debes verificar tu correo para iniciar sesión.',
+          confirmButtonColor: '#f39c12',
+        })
+      }
+
       Swal.fire({
         icon: 'error',
         title: 'Error en el servidor',
