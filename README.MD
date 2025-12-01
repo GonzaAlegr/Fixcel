@@ -39,11 +39,13 @@ FIXCEL
 │  ├─ index.html          # Archivo HTML raíz que monta la app de React
 │  ├─ vite.config.js      
 │  ├─ package-lock.json   
-│  └─ package.json      
-│
+│  └─ package.json   
+│ 
+├─ Documents              # Carpeta con los documentos del proyecto 
+│  └─ Fixcel fotos        # Fotos utilizadas en la pagina
+│ 
 ├─ Server
 │  ├─ node_modules
-│  ├─ app.js               # Archivo Raíz de BackEnd
 │  ├─ src  
 │  │  ├─ Controller        # Métodos de la Capa Lógica
 │  │  ├─ DataBase          # Creación de Tabla y Base de Datos
@@ -51,10 +53,11 @@ FIXCEL
 │  │  ├─ Router            # Rutas de la API
 │  │  └─ Utils             # Validación y Token
 │  ├─ .env                 # Variables de Entorno
-│  ├─ .gitignore           # Evita subir archivos sensibles
+│  ├─ app.js               # Archivo Raíz de BackEnd
 │  ├─ package-lock.json
 │  └─ package.json
 │
+└─ .gitignore           # Evita subir archivos sensibles
 └─ README.md
 ```
 
