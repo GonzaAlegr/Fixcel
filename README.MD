@@ -2,7 +2,7 @@
 
 ## Proyecto realizado en Node.js + React + SQLite3
 
-Este es un proyecto áulico desarrollado para ejemplificar el uso de tokens de seguridad (JWT) junto a la encriptación de contraseñas, estructurado en Frontend + Backend con arquitectura modular.
+Este es un proyecto áulico desarrollado para ejemplificar el uso de tokens de seguridad junto a la encriptación de contraseñas, estructurado en Frontend + Backend con arquitectura modular.
 
 ## 🦋 Datos del curso
 - Materia: Proyecto, diseño e implementación de sistemas computacionales
@@ -11,10 +11,10 @@ Este es un proyecto áulico desarrollado para ejemplificar el uso de tokens de s
 - Docente: Gareis Pablo
 
 ### 🍻 Subdivisión
-- Frontend
-- Backend
-- Documentación
-- Marketing
+- Frontend Abril Castro
+- Backend Gonzalo Alegre
+- Documentación Alejandro Fretes
+- Marketing Loana Macias
 
 ## 🏡 Tecnologías utilizadas
 - Node.js
@@ -37,9 +37,9 @@ FIXCEL
 │  │  ├─ Global           # Recursos globales 
 │  │  └─ Layouts.css      # Archivo principal de estilos CSS 
 │  ├─ index.html          # Archivo HTML raíz que monta la app de React
-│  ├─ vite.config.js      # Configuración de Vite 
-│  ├─ package-lock.json   # Versión exacta de dependencias instaladas
-│  └─ package.json        # Información del proyecto y lista de dependencias
+│  ├─ vite.config.js      
+│  ├─ package-lock.json   
+│  └─ package.json      
 │
 ├─ Server
 │  ├─ node_modules
@@ -71,7 +71,7 @@ FIXCEL
 Backend:
 cd Server
 npm install
-npm start
+node app.js
 ```
 ```
 Frontend:
@@ -80,8 +80,5 @@ npm install
 npm run dev
 ```
 
-## 📌 Objetivo del proyecto
-Implementar un flujo de autenticación educativo y funcional que permita comprender cómo se integran tecnologías modernas dentro de un entorno académico.
-
 ## 📝 Autores
-Proyecto desarrollado por estudiantes de 7.1 para la materia Proyecto, diseño e implementación de sistemas computacionales.
+Proyecto desarrollado por estudiantes de 7.1 como trabajo final.
